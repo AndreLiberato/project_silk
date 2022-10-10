@@ -21,7 +21,7 @@ class _SearchInputState extends State<SearchInput> {
         child: TextField(
             controller: _searchController,
             cursorColor: Colors.black26,
-            textAlignVertical: TextAlignVertical.center,
+            textAlignVertical: TextAlignVertical.bottom,
             style: const TextStyle(
               color: Colors.black54,
             ),
