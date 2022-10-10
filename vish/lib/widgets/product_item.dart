@@ -47,8 +47,9 @@ class ProductItem extends StatelessWidget {
                 ),
                 Ink(
                   decoration: BoxDecoration(
-                    borderRadius:
-                        const BorderRadius.all(Radius.elliptical(40, 80)),
+                    borderRadius: const BorderRadius.all(
+                      Radius.elliptical(15, 30),
+                    ),
                     color: Theme.of(context).primaryColor,
                   ),
                   child: InkWell(
