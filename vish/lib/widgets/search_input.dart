@@ -1,6 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
 class SearchInput extends StatefulWidget {
   const SearchInput({super.key});
@@ -10,27 +8,36 @@ class SearchInput extends StatefulWidget {
 }
 
 class _SearchInputState extends State<SearchInput> {
+  final _searchController = TextEditingController();
   @override
   Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(20.0),
+    return Container(
+      alignment: Alignment.center,
+      padding: const EdgeInsets.all(10.0),
+      height: 75,
+      width: 380,
       child: TextField(
-          cursorColor: Colors.grey,
-          decoration: InputDecoration(
+          controller: _searchController,
+          cursorColor: Colors.black26,
+          textAlignVertical: TextAlignVertical.center,
+          style: const TextStyle(
+            color: Colors.black54,
+          ),
+          decoration: const InputDecoration(
               hintText: "Procurar produtos",
-              prefixIcon: const Icon(
+              prefixIcon: Icon(
                 Icons.search,
                 size: 30,
                 color: Colors.black38,
               ),
-              fillColor: Theme.of(context).primaryColor,
+              fillColor: Colors.black12,
+              filled: true,
               focusedBorder: OutlineInputBorder(
-                borderRadius: const BorderRadius.all(Radius.circular(15)),
-                borderSide: BorderSide(
-                  color: Theme.of(context).primaryColor,
-                ),
+                borderSide: BorderSide.none,
+                borderRadius: BorderRadius.all(Radius.circular(15)),
               ),
-              border: const OutlineInputBorder(
+              border: OutlineInputBorder(
+                  borderSide: BorderSide.none,
                   borderRadius: BorderRadius.all(Radius.circular(15))))),
     );
   }

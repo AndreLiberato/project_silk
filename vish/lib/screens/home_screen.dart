@@ -90,13 +90,24 @@ class _HomeScreenState extends State<HomeScreen> {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          const SearchInput(),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: Text(
-              "Categorias",
-              style: TextStyle(
-                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
+          const Center(child: SearchInput()),
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                const Text(
+                  "Categorias",
+                  style: TextStyle(
+                      fontSize: 24, color: Colors.black, fontFamily: "Acme"),
+                ),
+                TextButton(
+                    onPressed: () {},
+                    child: Text("Mostrar todas",
+                        style: TextStyle(
+                          color: Theme.of(context).primaryColor,
+                        ))),
+              ],
             ),
           ),
           const SizedBox(
