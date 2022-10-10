@@ -18,10 +18,6 @@ class MyApp extends StatelessWidget {
       theme: Theme.of(context).copyWith(
           primaryColor: const Color(0xFFf65c05),
           textTheme: const TextTheme(
-              headline4: TextStyle(
-                  color: Color(0xFFf65c05),
-                  fontFamily: "Cherry Bomb",
-                  fontSize: 24),
               headline2: TextStyle(
                 fontSize: 14,
                 fontFamily: "Acme",

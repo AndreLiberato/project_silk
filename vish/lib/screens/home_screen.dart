@@ -73,7 +73,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("VISH", style: Theme.of(context).textTheme.headline4),
+        title: const Text(
+          "VISH",
+          style: TextStyle(
+              shadows: [Shadow(color: Colors.black26, offset: Offset(1, 3))],
+              color: Color(0xFFf65c05),
+              fontFamily: "Cherry Bomb",
+              fontSize: 24),
+        ),
         backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
@@ -91,6 +98,9 @@ class _HomeScreenState extends State<HomeScreen> {
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           const Center(child: SearchInput()),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
             child: Row(
