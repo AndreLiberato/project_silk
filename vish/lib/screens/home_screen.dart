@@ -128,6 +128,9 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
+          const SizedBox(
+            height: 10,
+          ),
           Padding(
             padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
             child: SizedBox(
@@ -142,6 +145,9 @@ class _HomeScreenState extends State<HomeScreen> {
                   itemBuilder: ((context, index) =>
                       CategoryItem(categories[index]))),
             ),
+          ),
+          const SizedBox(
+            height: 25,
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
