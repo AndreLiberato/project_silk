@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:vish/widgets/product_item.dart';
 
+import '../models/category.dart';
 import '../models/product.dart';
+import '../widgets/category_item.dart';
 import '/widgets/search_input.dart';
 
 final List<Product> products = [
@@ -59,6 +61,12 @@ final List<Product> products = [
       imageUrl:
           "https://d3ugyf2ht6aenh.cloudfront.net/stores/746/397/products/uva-brs-isis-sem-semente1-4117fb3e4898b50a5a16102264065112-1024-1024.jpg",
       price: 7.99),
+];
+
+final List<Category> categories = [
+  Category(id: 1, name: "Bebidas", image: "assets/images/bebidas.png"),
+  Category(id: 2, name: "Frutas", image: "assets/images/frutas.png"),
+  Category(id: 3, name: "Grãos", image: "assets/images/graos.png")
 ];
 
 class HomeScreen extends StatefulWidget {
@@ -120,8 +128,20 @@ class _HomeScreenState extends State<HomeScreen> {
               ],
             ),
           ),
-          const SizedBox(
-            height: 100,
+          Padding(
+            padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+            child: SizedBox(
+              width: 400,
+              height: 100,
+              child: ListView.separated(
+                  separatorBuilder: (context, index) => const SizedBox(
+                        width: 15,
+                      ),
+                  scrollDirection: Axis.horizontal,
+                  itemCount: categories.length,
+                  itemBuilder: ((context, index) =>
+                      CategoryItem(categories[index]))),
+            ),
           ),
           const Padding(
             padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
