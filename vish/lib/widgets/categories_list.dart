@@ -26,7 +26,7 @@ class CategoriesList extends StatelessWidget {
                   fontSize: 24, color: Colors.black, fontFamily: "Acme"),
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed('/categorias'),
                 child: Text("Mostrar todas",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,

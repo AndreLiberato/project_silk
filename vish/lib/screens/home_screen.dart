@@ -6,6 +6,7 @@ import '../widgets/products_list.dart';
 import '/widgets/search_input.dart';
 
 class HomeScreen extends StatefulWidget {
+  static const routeName = '/';
   const HomeScreen({super.key});
 
   @override

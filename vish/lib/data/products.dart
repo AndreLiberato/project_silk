@@ -1,5 +1,3 @@
-import 'package:vish/data/categories.dart';
-
 import '../models/product.dart';
 
 final List<Product> products = [

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import 'screens/categories_screen.dart';
 import 'screens/home_screen.dart';
 
 void main() {
@@ -14,17 +15,23 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       title: "Vish-virtual shop",
-      home: const HomeScreen(),
+      initialRoute: "/",
       theme: Theme.of(context).copyWith(
-          primaryColor: const Color(0xFFf65c05),
-          textTheme: const TextTheme(
-              headline2: TextStyle(
-                fontSize: 14,
-                fontFamily: "Acme",
-                color: Colors.black,
-              ),
-              headline1: TextStyle(
-                  fontSize: 12, fontFamily: "Acme", color: Colors.grey))),
+        primaryColor: const Color(0xFFf65c05),
+        textTheme: const TextTheme(
+          headline2: TextStyle(
+            fontSize: 14,
+            fontFamily: "Acme",
+            color: Colors.black,
+          ),
+          headline1:
+              TextStyle(fontSize: 12, fontFamily: "Acme", color: Colors.grey),
+        ),
+      ),
+      routes: {
+        "/": (context) => const HomeScreen(),
+        "/categorias": (context) => CategoriesScreen(),
+      },
     );
   }
 }
