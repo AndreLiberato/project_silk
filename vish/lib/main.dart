@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'screens/categories_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/search_results_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -30,6 +31,7 @@ class MyApp extends StatelessWidget {
       ),
       routes: {
         "/": (context) => const HomeScreen(),
+        "/search-results": (context) => const SearchResultsScreen(),
         "/categorias": (context) => CategoriesScreen(),
       },
     );

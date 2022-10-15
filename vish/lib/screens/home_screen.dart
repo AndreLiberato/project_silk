@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../data/products.dart';
 import '../navigation/my_bottom_navbar.dart';
 import '../widgets/categories_list.dart';
 import '../widgets/products_list.dart';
@@ -58,7 +59,18 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 25,
           ),
-          Expanded(child: ProductsList(_categoryFilter)),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Text(
+              "Produtos",
+              style: TextStyle(
+                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(child: ProductsList(_categoryFilter, products)),
         ],
       ),
       bottomNavigationBar: const MyBottomNavBar(),
