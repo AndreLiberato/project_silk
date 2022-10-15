@@ -34,7 +34,15 @@ class SearchResultsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: ProductsList(null, resultProducts),
+      body: resultProducts.isNotEmpty
+          ? ProductsList(null, resultProducts)
+          : const Center(
+              child: Text(
+                "Nenhum produto encontrado!",
+                style: TextStyle(
+                    color: Colors.black, fontFamily: "Acme", fontSize: 18),
+              ),
+            ),
     );
   }
 }
