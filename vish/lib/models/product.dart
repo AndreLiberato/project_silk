@@ -5,6 +5,7 @@ class Product {
   String measure;
   double price;
   String description;
+  List<int> categories;
 
   Product(
       {required this.id,
@@ -12,5 +13,6 @@ class Product {
       required this.imageUrl,
       required this.measure,
       required this.price,
-      required this.description});
+      required this.description,
+      required this.categories});
 }

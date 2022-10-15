@@ -18,6 +18,7 @@ class ProductItem extends StatelessWidget {
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
               child: Image.network(
@@ -26,9 +27,11 @@ class ProductItem extends StatelessWidget {
                 height: 80,
               ),
             ),
-            Text(
-              product.name,
-              style: Theme.of(context).textTheme.headline2,
+            Flexible(
+              child: Text(
+                product.name,
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
             Text(
               product.measure,

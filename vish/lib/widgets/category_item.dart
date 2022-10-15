@@ -28,10 +28,12 @@ class CategoryItem extends StatelessWidget {
               height: 80,
               child: Image.asset(category.image),
             ),
-            Text(
-              category.name,
-              style: const TextStyle(
-                  fontFamily: "Acme", fontSize: 20, color: Colors.black87),
+            Flexible(
+              child: Text(
+                category.name,
+                style: const TextStyle(
+                    fontFamily: "Acme", fontSize: 20, color: Colors.black87),
+              ),
             ),
             const SizedBox(
               width: 5,
