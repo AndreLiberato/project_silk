@@ -4,7 +4,13 @@ import '../data/categories.dart';
 import 'category_item.dart';
 
 class CategoriesList extends StatelessWidget {
-  const CategoriesList({super.key});
+  final Function _applyCategoryFilter;
+
+  CategoriesList(this._applyCategoryFilter);
+
+  void _applyFilter(int id) {
+    _applyCategoryFilter(id);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -42,8 +48,10 @@ class CategoriesList extends StatelessWidget {
                   ),
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
-              itemBuilder: ((context, index) =>
-                  CategoryItem(categories[index]))),
+              itemBuilder: ((context, index) => InkWell(
+                    child: CategoryItem(categories[index]),
+                    onTap: () => _applyFilter(categories[index].id),
+                  ))),
         ),
       ),
     ]);

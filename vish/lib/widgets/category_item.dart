@@ -8,14 +8,14 @@ class CategoryItem extends StatelessWidget {
   Category category;
 
   CategoryItem(this.category);
+
   @override
   Widget build(BuildContext context) {
     return SizedBox(
       width: 200,
       height: 20,
       child: Card(
-        color: Colors.primaries[Random().nextInt(Colors.primaries.length)]
-            .withOpacity(0.4),
+        color: Colors.primaries.elementAt(category.id).withOpacity(0.4),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),

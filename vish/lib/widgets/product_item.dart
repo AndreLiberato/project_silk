@@ -13,7 +13,7 @@ class ProductItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
       ),
-      elevation: 2,
+      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(

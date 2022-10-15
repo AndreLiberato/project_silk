@@ -13,6 +13,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _categoryFilter = 1;
+
+  void _applyCategoryFilter(int id) {
+    setState(() {
+      _categoryFilter = id;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -40,16 +48,16 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Center(child: SearchInput()),
-          SizedBox(
+        children: [
+          const Center(child: SearchInput()),
+          const SizedBox(
             height: 10,
           ),
-          CategoriesList(),
-          SizedBox(
+          CategoriesList(_applyCategoryFilter),
+          const SizedBox(
             height: 25,
           ),
-          Expanded(child: ProductsList()),
+          Expanded(child: ProductsList(_categoryFilter)),
         ],
       ),
       bottomNavigationBar: const MyBottomNavBar(),
