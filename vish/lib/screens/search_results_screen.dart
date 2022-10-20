@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:vish/models/product.dart';
+import 'package:provider/provider.dart';
 
-import '../data/products.dart';
+import '../providers/products_provider.dart';
 import '../widgets/products_list.dart';
 
 class SearchResultsScreen extends StatelessWidget {
@@ -9,12 +9,8 @@ class SearchResultsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    var _searchFilter = ModalRoute.of(context)!.settings.arguments as String;
-    List<Product> resultProducts = products
-        .where((product) =>
-            product.name.toLowerCase().contains(_searchFilter.toLowerCase()))
-        .toList();
-
+    var searchFilter = ModalRoute.of(context)!.settings.arguments as String;
+    var products = context.read<ProductsProvider>();
     return Scaffold(
       appBar: AppBar(
         leading: IconButton(
@@ -34,8 +30,8 @@ class SearchResultsScreen extends StatelessWidget {
         backgroundColor: Colors.transparent,
         elevation: 0,
       ),
-      body: resultProducts.isNotEmpty
-          ? ProductsList(null, resultProducts)
+      body: products.searchResults(searchFilter).isNotEmpty
+          ? ProductsList(true, searchFilter)
           : const Center(
               child: Text(
                 "Nenhum produto encontrado!",

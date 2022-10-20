@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../data/products.dart';
 import '../navigation/my_bottom_navbar.dart';
 import '../widgets/categories_list.dart';
 import '../widgets/products_list.dart';
@@ -15,14 +14,6 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  var _categoryFilter = 1;
-
-  void _applyCategoryFilter(int id) {
-    setState(() {
-      _categoryFilter = id;
-    });
-  }
-
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -55,7 +46,7 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 10,
           ),
-          CategoriesList(_applyCategoryFilter),
+          CategoriesList(),
           const SizedBox(
             height: 25,
           ),
@@ -70,7 +61,10 @@ class _HomeScreenState extends State<HomeScreen> {
           const SizedBox(
             height: 20,
           ),
-          Expanded(child: ProductsList(_categoryFilter, products)),
+          Expanded(
+              child: ProductsList(
+            false,
+          )),
         ],
       ),
       bottomNavigationBar: const MyBottomNavBar(),

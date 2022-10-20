@@ -1,19 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/products_provider.dart';
 import '../data/categories.dart';
 import 'category_item.dart';
 
 class CategoriesList extends StatelessWidget {
-  final Function _applyCategoryFilter;
-
-  CategoriesList(this._applyCategoryFilter);
-
-  void _applyFilter(int id) {
-    _applyCategoryFilter(id);
-  }
-
   @override
   Widget build(BuildContext context) {
+    var categoryFilter = context.read<ProductsProvider>();
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -50,7 +45,8 @@ class CategoriesList extends StatelessWidget {
               itemCount: categories.length,
               itemBuilder: ((context, index) => InkWell(
                     child: CategoryItem(categories[index]),
-                    onTap: () => _applyFilter(categories[index].id),
+                    onTap: () => categoryFilter
+                        .changeCategoryFilter(categories[index].id),
                   ))),
         ),
       ),
