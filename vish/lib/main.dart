@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 
 import 'providers/products_provider.dart';
 import 'screens/categories_screen.dart';
+import 'screens/category_products_screen.dart';
 import 'screens/home_screen.dart';
 import 'screens/search_results_screen.dart';
 
@@ -37,6 +38,7 @@ class MyApp extends StatelessWidget {
             "/": (context) => const HomeScreen(),
             "/search-results": (context) => const SearchResultsScreen(),
             "/categorias": (context) => CategoriesScreen(),
+            "/categoria-produtos": (context) => const CategoryProductsScreen(),
           },
         ));
   }
