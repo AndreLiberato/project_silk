@@ -27,7 +27,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                   Center(
                     child: Image.network(
                       product.imageUrl[_selectedImage],
-                      fit: BoxFit.fitWidth,
+                      fit: BoxFit.contain,
                       height: 360,
                       width: double.infinity,
                     ),
@@ -58,6 +58,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                 ],
               ),
             ),
+          ),
+          const SizedBox(
+            height: 15,
           ),
           Container(
             color: Colors.white,
