@@ -3,8 +3,15 @@ import 'package:vish/models/product.dart';
 
 import '../widgets/product_detail_list.dart';
 
-class ProductDetailScreen extends StatelessWidget {
+class ProductDetailScreen extends StatefulWidget {
   const ProductDetailScreen({super.key});
+
+  @override
+  State<ProductDetailScreen> createState() => _ProductDetailScreenState();
+}
+
+class _ProductDetailScreenState extends State<ProductDetailScreen> {
+  var _selectedImage = 0;
 
   @override
   Widget build(BuildContext context) {
@@ -19,8 +26,12 @@ class ProductDetailScreen extends StatelessWidget {
               child: Stack(
                 children: [
                   Center(
-                    child: Image.network(product.imageUrl,
-                        fit: BoxFit.contain, height: 360),
+                    child: Image.network(
+                      product.imageUrl[_selectedImage],
+                      fit: BoxFit.fitWidth,
+                      height: 360,
+                      width: double.infinity,
+                    ),
                   ),
                   Positioned(
                     top: 20,
@@ -49,8 +60,35 @@ class ProductDetailScreen extends StatelessWidget {
               ),
             ),
           ),
-          const SizedBox(
-            height: 15,
+          Container(
+            color: Colors.white,
+            padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
+            height: 120,
+            child: ListView.separated(
+                scrollDirection: Axis.horizontal,
+                itemBuilder: ((context, index) => InkWell(
+                      onTap: () {
+                        setState(() {
+                          _selectedImage = index;
+                        });
+                      },
+                      child: Container(
+                        width: 85,
+                        height: 60,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(10),
+                          border: Border.all(width: 1, color: Colors.black54),
+                        ),
+                        child: Image.network(
+                          product.imageUrl[index],
+                          fit: BoxFit.contain,
+                        ),
+                      ),
+                    )),
+                separatorBuilder: ((context, index) => const SizedBox(
+                      width: 10,
+                    )),
+                itemCount: product.imageUrl.length),
           ),
           ProductDetailList(product),
         ],

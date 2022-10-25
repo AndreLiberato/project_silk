@@ -1,7 +1,7 @@
 class Product {
   String id;
   String name;
-  String imageUrl;
+  List<String> imageUrl;
   String measure;
   double price;
   String description;
