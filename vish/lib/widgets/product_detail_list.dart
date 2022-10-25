@@ -178,22 +178,24 @@ class _ProductDetailListState extends State<ProductDetailList> {
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        Text(widget.product.name,
-                            style: Theme.of(context).textTheme.headline4),
-                        const SizedBox(
-                          height: 10,
-                        ),
-                        Text(
-                          widget.product.measure,
-                          style: const TextStyle(
-                              fontFamily: "Acme",
-                              fontSize: 14,
-                              color: Colors.black54),
-                        ),
-                      ],
+                    Flexible(
+                      child: Column(
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(widget.product.name,
+                              style: Theme.of(context).textTheme.headline4),
+                          const SizedBox(
+                            height: 10,
+                          ),
+                          Text(
+                            widget.product.measure,
+                            style: const TextStyle(
+                                fontFamily: "Acme",
+                                fontSize: 14,
+                                color: Colors.black54),
+                          ),
+                        ],
+                      ),
                     ),
                     IconButton(
                       onPressed: () {},
