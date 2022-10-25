@@ -5,6 +5,7 @@ import 'providers/products_provider.dart';
 import 'screens/categories_screen.dart';
 import 'screens/category_products_screen.dart';
 import 'screens/home_screen.dart';
+import 'screens/product_detail_screen.dart';
 import 'screens/search_results_screen.dart';
 
 void main() {
@@ -25,6 +26,8 @@ class MyApp extends StatelessWidget {
           theme: Theme.of(context).copyWith(
             primaryColor: const Color(0xFFf65c05),
             textTheme: const TextTheme(
+              headline4: TextStyle(
+                  fontSize: 30, color: Colors.black, fontFamily: "Acme"),
               headline2: TextStyle(
                 fontSize: 14,
                 fontFamily: "Acme",
@@ -39,6 +42,7 @@ class MyApp extends StatelessWidget {
             "/search-results": (context) => const SearchResultsScreen(),
             "/categorias": (context) => CategoriesScreen(),
             "/categoria-produtos": (context) => const CategoryProductsScreen(),
+            "/detalhe-produto": (context) => const ProductDetailScreen(),
           },
         ));
   }
