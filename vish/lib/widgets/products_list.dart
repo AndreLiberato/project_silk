@@ -31,9 +31,14 @@ class ProductsList extends StatelessWidget {
                 mainAxisSpacing: 10,
                 crossAxisCount: 2),
             itemBuilder: ((context, index) => InkWell(
-                  child: ProductItem(_isSearching
-                      ? resultadoPesquisa[index]
-                      : products.filteredProducts[index]),
+                  child: Hero(
+                    tag: _isSearching
+                        ? resultadoPesquisa[index].id
+                        : products.filteredProducts[index].id,
+                    child: ProductItem(_isSearching
+                        ? resultadoPesquisa[index]
+                        : products.filteredProducts[index]),
+                  ),
                   onTap: () => Navigator.of(context).pushNamed(
                       "/detalhe-produto",
                       arguments: _isSearching

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 import 'package:vish/models/product.dart';
+
+import '../widgets/product_detail_list.dart';
 
 class ProductDetailScreen extends StatelessWidget {
   const ProductDetailScreen({super.key});
@@ -13,36 +13,46 @@ class ProductDetailScreen extends StatelessWidget {
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Stack(
-            children: [
-              Image.network(product.imageUrl),
-              Positioned(
-                top: 20,
-                child: IconButton(
-                  onPressed: () => Navigator.of(context).pop(),
-                  icon: const Icon(Icons.arrow_back_ios),
-                  iconSize: 40,
-                ),
+          Hero(
+            tag: product.id,
+            child: Material(
+              child: Stack(
+                children: [
+                  Center(
+                    child: Image.network(product.imageUrl,
+                        fit: BoxFit.contain, height: 360),
+                  ),
+                  Positioned(
+                    top: 20,
+                    child: IconButton(
+                      onPressed: () => Navigator.of(context).pop(),
+                      icon: const Icon(Icons.arrow_back_ios),
+                      iconSize: 40,
+                    ),
+                  ),
+                  Positioned(
+                    right: 5,
+                    bottom: 10,
+                    child: ElevatedButton(
+                      style: ElevatedButton.styleFrom(
+                        backgroundColor: Theme.of(context).primaryColor,
+                        elevation: 8,
+                      ),
+                      onPressed: () {},
+                      child: const Text(
+                        "Adicionar ao carrinho",
+                        style: TextStyle(fontFamily: "Acme", fontSize: 20),
+                      ),
+                    ),
+                  )
+                ],
               ),
-            ],
-          ),
-          Padding(
-            padding: const EdgeInsets.all(15),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(product.name,
-                    style: Theme.of(context).textTheme.headline4),
-                Text(
-                  product.measure,
-                  style: Theme.of(context).textTheme.headline2,
-                ),
-                const SizedBox(
-                  height: 15,
-                ),
-              ],
             ),
           ),
+          const SizedBox(
+            height: 15,
+          ),
+          ProductDetailList(product),
         ],
       ),
     );
