@@ -76,7 +76,8 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         });
                       },
                       child: Align(
-                        child: Container(
+                        child: AnimatedContainer(
+                          duration: const Duration(milliseconds: 500),
                           width: _selectedImage == index ? 90 : 82,
                           height: _selectedImage == index ? 90 : 82,
                           padding: const EdgeInsets.symmetric(
