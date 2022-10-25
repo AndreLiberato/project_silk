@@ -169,7 +169,7 @@ class _ProductDetailListState extends State<ProductDetailList> {
     return Expanded(
       child: ListView(children: [
         Padding(
-          padding: const EdgeInsets.all(15),
+          padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 15),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -177,6 +177,7 @@ class _ProductDetailListState extends State<ProductDetailList> {
                 padding: const EdgeInsets.only(right: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Flexible(
                       child: Column(
@@ -246,22 +247,20 @@ class _ProductDetailListState extends State<ProductDetailList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Text(
-                    "Avaliações",
-                    style: TextStyle(
-                      color: Colors.black,
-                      fontFamily: "Acme",
-                      fontSize: 16,
+                  const Expanded(
+                    child: Text(
+                      "Avaliações",
+                      style: TextStyle(
+                        color: Colors.black,
+                        fontFamily: "Acme",
+                        fontSize: 16,
+                      ),
                     ),
                   ),
-                  Row(
-                    children: [
-                      ..._rateBuilder(),
-                      IconButton(
-                        onPressed: () {},
-                        icon: const Icon(Icons.arrow_forward_ios),
-                      ),
-                    ],
+                  ..._rateBuilder(),
+                  IconButton(
+                    onPressed: () {},
+                    icon: const Icon(Icons.arrow_forward_ios),
                   ),
                 ],
               ),

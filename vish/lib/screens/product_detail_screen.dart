@@ -18,7 +18,6 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
     var product = ModalRoute.of(context)!.settings.arguments as Product;
     return Scaffold(
       body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Hero(
             tag: product.id,
@@ -62,8 +61,9 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
           ),
           Container(
             color: Colors.white,
-            padding: const EdgeInsets.fromLTRB(20, 0, 10, 20),
-            height: 120,
+            padding: const EdgeInsets.only(left: 12),
+            height: 95,
+            width: double.infinity,
             child: ListView.separated(
                 scrollDirection: Axis.horizontal,
                 itemBuilder: ((context, index) => InkWell(
@@ -72,16 +72,34 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           _selectedImage = index;
                         });
                       },
-                      child: Container(
-                        width: 85,
-                        height: 60,
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.circular(10),
-                          border: Border.all(width: 1, color: Colors.black54),
-                        ),
-                        child: Image.network(
-                          product.imageUrl[index],
-                          fit: BoxFit.contain,
+                      child: Align(
+                        child: Container(
+                          width: _selectedImage == index ? 90 : 82,
+                          height: _selectedImage == index ? 90 : 82,
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 0, horizontal: 10),
+                          decoration: BoxDecoration(
+                            boxShadow: const [
+                              BoxShadow(
+                                  blurStyle: BlurStyle.normal,
+                                  offset: Offset(0, 0),
+                                  color: Colors.black87),
+                              BoxShadow(
+                                  blurStyle: BlurStyle.normal,
+                                  blurRadius: 8,
+                                  offset: Offset(0, 0),
+                                  color: Colors.white),
+                            ],
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 1, color: Colors.black54),
+                          ),
+                          child: ClipRRect(
+                            borderRadius: BorderRadius.circular(10),
+                            child: Image.network(
+                              product.imageUrl[index],
+                              fit: BoxFit.contain,
+                            ),
+                          ),
                         ),
                       ),
                     )),
