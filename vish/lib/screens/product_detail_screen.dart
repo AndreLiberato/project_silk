@@ -80,7 +80,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                           width: _selectedImage == index ? 90 : 82,
                           height: _selectedImage == index ? 90 : 82,
                           padding: const EdgeInsets.symmetric(
-                              vertical: 0, horizontal: 10),
+                              vertical: 10, horizontal: 10),
                           decoration: BoxDecoration(
                             boxShadow: const [
                               BoxShadow(
