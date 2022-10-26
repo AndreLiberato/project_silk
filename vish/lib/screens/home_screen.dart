@@ -1,33 +1,9 @@
 import 'package:flutter/material.dart';
 
+import '../navigation/my_bottom_navbar.dart';
+import '../widgets/categories_list.dart';
+import '../widgets/products_list.dart';
 import '/widgets/search_input.dart';
-
-const products = [
-  {
-    "id": "1",
-    "name": "Maçã Gala Nacional",
-    "measure": "Kg",
-    "price": 4.99,
-    "description":
-        "Maçã gala nacional, produzida nas terras fantásticas. Nutritiva e suculenta."
-  },
-  {
-    "id": "2",
-    "name": "Banana Prata",
-    "measure": "Kg",
-    "price": 3.99,
-    "description":
-        "Banana prata, produzida nas terras fantásticas. Nutritiva e suculenta."
-  },
-  {
-    "id": "3",
-    "name": "Uva sem semente",
-    "measure": "Kg",
-    "price": 7.99,
-    "description":
-        "Uva sem semente, produzida nas terras fantásticas. Nutritiva e suculenta."
-  },
-];
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -41,7 +17,14 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("VISH", style: Theme.of(context).textTheme.headline4),
+        title: const Text(
+          "VISH",
+          style: TextStyle(
+              shadows: [Shadow(color: Colors.black26, offset: Offset(1, 3))],
+              color: Color(0xFFf65c05),
+              fontFamily: "Cherry Bomb",
+              fontSize: 24),
+        ),
         backgroundColor: Colors.transparent,
         centerTitle: true,
         elevation: 0,
@@ -57,44 +40,19 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const SearchInput(),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: Text(
-              "Categorias",
-              style: TextStyle(
-                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
-            ),
+        children: const [
+          Center(child: SearchInput()),
+          SizedBox(
+            height: 10,
           ),
-          const SizedBox(
-            height: 100,
+          CategoriesList(),
+          SizedBox(
+            height: 25,
           ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: Text(
-              "Produtos",
-              style: TextStyle(
-                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 20),
-              child: ListView.builder(
-                  itemCount: products.length,
-                  itemBuilder: ((context, index) => Text(
-                        products[index]["name"].toString(),
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 24),
-                      ))),
-            ),
-          ),
+          Expanded(child: ProductsList()),
         ],
       ),
+      bottomNavigationBar: const MyBottomNavBar(),
     );
   }
 }
