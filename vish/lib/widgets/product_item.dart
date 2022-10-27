@@ -22,7 +22,7 @@ class ProductItem extends StatelessWidget {
           children: [
             Center(
               child: Image.network(
-                product.imageUrl,
+                product.imageUrl[0],
                 fit: BoxFit.contain,
                 height: 80,
               ),
