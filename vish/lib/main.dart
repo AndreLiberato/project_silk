@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/order_screen.dart';
@@ -13,6 +14,11 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: [
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate
+      ],
+      supportedLocales: [const Locale('pt', 'BR')],
       debugShowCheckedModeBanner: false,
       title: "Vish-virtual shop",
       home: const OrderScreen(),
