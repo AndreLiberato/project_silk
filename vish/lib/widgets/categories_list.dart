@@ -1,13 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/products_provider.dart';
 import '../data/categories.dart';
 import 'category_item.dart';
 
 class CategoriesList extends StatelessWidget {
-  const CategoriesList({super.key});
-
   @override
   Widget build(BuildContext context) {
+    var categoryFilter = context.read<ProductsProvider>();
     return Column(children: [
       Padding(
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
@@ -20,7 +21,7 @@ class CategoriesList extends StatelessWidget {
                   fontSize: 24, color: Colors.black, fontFamily: "Acme"),
             ),
             TextButton(
-                onPressed: () {},
+                onPressed: () => Navigator.of(context).pushNamed('/categorias'),
                 child: Text("Mostrar todas",
                     style: TextStyle(
                       color: Theme.of(context).primaryColor,
@@ -42,8 +43,11 @@ class CategoriesList extends StatelessWidget {
                   ),
               scrollDirection: Axis.horizontal,
               itemCount: categories.length,
-              itemBuilder: ((context, index) =>
-                  CategoryItem(categories[index]))),
+              itemBuilder: ((context, index) => InkWell(
+                    child: CategoryItem(categories[index]),
+                    onTap: () => categoryFilter
+                        .changeCategoryFilter(categories[index].id),
+                  ))),
         ),
       ),
     ]);

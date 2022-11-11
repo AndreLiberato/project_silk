@@ -13,22 +13,25 @@ class ProductItem extends StatelessWidget {
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
       ),
-      elevation: 2,
+      elevation: 4,
       child: Padding(
         padding: const EdgeInsets.all(8.0),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
             Center(
               child: Image.network(
-                product.imageUrl,
+                product.imageUrl[0],
                 fit: BoxFit.contain,
                 height: 80,
               ),
             ),
-            Text(
-              product.name,
-              style: Theme.of(context).textTheme.headline2,
+            Flexible(
+              child: Text(
+                product.name,
+                style: Theme.of(context).textTheme.headline2,
+              ),
             ),
             Text(
               product.measure,

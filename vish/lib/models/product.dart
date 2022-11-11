@@ -1,10 +1,12 @@
 class Product {
   String id;
   String name;
-  String imageUrl;
+  List<String> imageUrl;
   String measure;
   double price;
   String description;
+  List<int> categories;
+  int rating;
 
   Product(
       {required this.id,
@@ -12,5 +14,7 @@ class Product {
       required this.imageUrl,
       required this.measure,
       required this.price,
-      required this.description});
+      required this.description,
+      required this.categories,
+      required this.rating});
 }

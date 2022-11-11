@@ -40,16 +40,30 @@ class _HomeScreenState extends State<HomeScreen> {
       ),
       body: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Center(child: SearchInput()),
-          SizedBox(
+        children: [
+          const Center(child: SearchInput()),
+          const SizedBox(
             height: 10,
           ),
           CategoriesList(),
-          SizedBox(
+          const SizedBox(
             height: 25,
           ),
-          Expanded(child: ProductsList()),
+          const Padding(
+            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
+            child: Text(
+              "Produtos",
+              style: TextStyle(
+                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
+            ),
+          ),
+          const SizedBox(
+            height: 20,
+          ),
+          Expanded(
+              child: ProductsList(
+            false,
+          )),
         ],
       ),
       bottomNavigationBar: const MyBottomNavBar(),

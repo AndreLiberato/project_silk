@@ -14,8 +14,7 @@ class CategoryItem extends StatelessWidget {
       width: 200,
       height: 20,
       child: Card(
-        color: Colors.primaries[Random().nextInt(Colors.primaries.length)]
-            .withOpacity(0.4),
+        color: Colors.primaries.elementAt(category.id).withOpacity(0.4),
         elevation: 0,
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(18),
@@ -28,10 +27,12 @@ class CategoryItem extends StatelessWidget {
               height: 80,
               child: Image.asset(category.image),
             ),
-            Text(
-              category.name,
-              style: const TextStyle(
-                  fontFamily: "Acme", fontSize: 20, color: Colors.black87),
+            Flexible(
+              child: Text(
+                category.name,
+                style: const TextStyle(
+                    fontFamily: "Acme", fontSize: 20, color: Colors.black87),
+              ),
             ),
             const SizedBox(
               width: 5,
