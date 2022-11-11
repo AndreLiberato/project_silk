@@ -30,11 +30,15 @@ class CartState extends State<CartItem>{
 
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 50,
-      height: 100,
+      width: 120,
+      height: 120,
       child: Row(
         children: [
-          Image.network(cartState.imageUrl),
+          SizedBox(
+            width: 100,
+            height: 100,
+            child:Image.network(cartState.imageUrl)
+          ),
           SizedBox(
             width: 150,
             height: 300,
@@ -45,7 +49,7 @@ class CartState extends State<CartItem>{
                   subtitle: Text(cartState.measure, style: TextStyle(color: Colors.grey, fontFamily: "Acme",fontSize: 15), textAlign: TextAlign.left),
                 ),
                 Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 17),
+                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 18),
                   child: 
                   Row(
                   children: [
@@ -80,7 +84,7 @@ class CartState extends State<CartItem>{
             ),
           ),
           const SizedBox(
-            width: 130,
+            width: 25,
             height: 0,
           ),
           Column(
