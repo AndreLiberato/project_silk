@@ -21,7 +21,7 @@ class OrderItem extends StatelessWidget {
               subtitle: Column(children: [Text(order.status, style: TextStyle(color: order.color, fontSize: 15, fontFamily: "Acme"), textAlign: TextAlign.start,),Text(DateFormat("d 'de' MMMM 'de' y","pt_BR").format(data), style: const TextStyle(color: Colors.grey, fontSize: 15, fontFamily: "Acme"), textAlign: TextAlign.start)]),
               trailing: Text(order.valor, style: const TextStyle(color: Color(0xFFf65c05), fontSize: 20, fontFamily: "Acme"), textAlign: TextAlign.center,),
             ),
-      );
+    );
   }
 
 }

@@ -14,7 +14,7 @@ class OrderList extends StatelessWidget {
                 itemCount: pedidos.length,
                 itemBuilder: ((context, index) =>
                     OrderItem(pedidos[index])))),
-      );
+    );
   }
 
 }

@@ -3,6 +3,7 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 
 import 'screens/home_screen.dart';
 import 'screens/order_screen.dart';
+import 'screens/cart_screen.dart';
 
 void main() {
   runApp(const MyApp());
@@ -21,7 +22,7 @@ class MyApp extends StatelessWidget {
       supportedLocales: [const Locale('pt', 'BR')],
       debugShowCheckedModeBanner: false,
       title: "Vish-virtual shop",
-      home: const OrderScreen(),
+      home: const CartScreen(),
       theme: Theme.of(context).copyWith(
           primaryColor: const Color(0xFFf65c05),
           textTheme: const TextTheme(
