@@ -8,7 +8,6 @@ class CategoryItem extends StatelessWidget {
   Category category;
 
   CategoryItem(this.category);
-
   @override
   Widget build(BuildContext context) {
     return SizedBox(
