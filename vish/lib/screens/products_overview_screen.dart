@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 
+import '../navigation/my_drawer.dart';
 import '../widgets/categories_list.dart';
 import '../widgets/my_appbar.dart';
 import '../widgets/products_list.dart';
@@ -49,7 +50,7 @@ class ProductsOverviewScreen extends StatelessWidget {
           )),
         ],
       ),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
     );
   }
 }
