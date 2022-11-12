@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:vish/models/product.dart';
 
+import '../providers/cart_provider.dart';
 import '../widgets/product_detail_list.dart';
 
 class ProductDetailScreen extends StatefulWidget {
@@ -12,6 +14,16 @@ class ProductDetailScreen extends StatefulWidget {
 
 class _ProductDetailScreenState extends State<ProductDetailScreen> {
   var _selectedImage = 0;
+  int _quantity = 1;
+
+  void _changeQuantity(int quantity) {
+    _quantity = quantity;
+  }
+
+  void _addToCart(Product produto) {
+    Provider.of<CartProvider>(context, listen: false)
+        .addProductToCart(produto, _quantity);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -48,7 +60,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                         backgroundColor: Theme.of(context).primaryColor,
                         elevation: 8,
                       ),
-                      onPressed: () {},
+                      onPressed: () => _addToCart(product),
                       child: const Text(
                         "Adicionar ao carrinho",
                         style: TextStyle(fontFamily: "Acme", fontSize: 20),
@@ -112,7 +124,7 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
                     )),
                 itemCount: product.imageUrl.length),
           ),
-          ProductDetailList(product),
+          ProductDetailList(product, _changeQuantity),
         ],
       ),
     );

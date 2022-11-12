@@ -1,112 +1,104 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:vish/providers/cart_provider.dart';
 
-import '../models/cart.dart';
-import '../data/carts.dart';
+import '../models/cart_product.dart';
+import 'quantity_button.dart';
 
 class CartItem extends StatefulWidget {
+  CartProduct cartItem;
 
-  Cart cartItem;
-  int index;
-  CartItem(this.cartItem,this.index);
-  CartState createState() => CartState(cartItem,index);
-  
+  CartItem(this.cartItem);
+
+  CartState createState() => CartState();
 }
 
-class CartState extends State<CartItem>{
-  
-  Cart cartState;
-  int index;
-  CartState(this.cartState, this.index);
+class CartState extends State<CartItem> {
+  late CartProvider myCart;
 
-  void change(int delta){
+  @override
+  void initState() {
+    super.initState();
+    myCart = Provider.of<CartProvider>(context, listen: false);
+  }
+
+  void _changeQuantity(int quantityChange) {
     setState(() {
-      cartState.quantity = cartState.quantity + delta;
-      if(cartState.quantity==0){
-        cartState.quantity = 1;
-      }
-      cartState.price = cartState.price * cartState.quantity;
+      myCart.changeProductQuantity(widget.cartItem, quantityChange);
     });
   }
 
+  @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 120,
-      height: 120,
-      child: Row(
-        children: [
-          SizedBox(
-            width: 100,
-            height: 100,
-            child:Image.network(cartState.imageUrl)
-          ),
-          SizedBox(
-            width: 150,
-            height: 300,
-            child: Column(
-              children: [
-                ListTile(
-                  title: Text(cartState.name, style: TextStyle(color: Colors.black, fontFamily: "Acme",fontSize: 15)),
-                  subtitle: Text(cartState.measure, style: TextStyle(color: Colors.grey, fontFamily: "Acme",fontSize: 15), textAlign: TextAlign.left),
-                ),
-                Padding(
-                  padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 18),
-                  child: 
-                  Row(
+    return Container(
+        height: 120,
+        alignment: Alignment.center,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Flexible(
+              flex: 2,
+              child: Image.network(widget.cartItem.product.imageUrl[0]),
+            ),
+            Flexible(
+              flex: 6,
+              fit: FlexFit.tight,
+              child: Padding(
+                padding: const EdgeInsets.only(left: 20, top: 25),
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    SizedBox(
-                      width:30,
-                      child:
-                        TextButton(
-                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFFf65c05))),
-                          onPressed: (){
-                            change(-1);
-                          }, 
-                          child: const Text("-", style: TextStyle(color: Colors.white) )),
-                    ),                    
-                    SizedBox(
-                      width: 30,
-                      child: Text(cartState.quantity.toString(), style: const TextStyle(color: Colors.black, fontFamily: "Acme",fontSize: 15),textAlign: TextAlign.center),
+                    Flexible(
+                      flex: 2,
+                      child: Text(
+                        widget.cartItem.product.name,
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 12),
+                      ),
                     ),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(widget.cartItem.product.measure,
+                        style: const TextStyle(
+                            color: Colors.black45, fontSize: 10)),
                     SizedBox(
-                      width:30,
-                      child:
-                        TextButton(
-                          style: ButtonStyle(backgroundColor: MaterialStateProperty.all(const Color(0xFFf65c05))),
-                          onPressed: (){
-                            change(1);
-                          }, 
-                          child: const Text("+", style: TextStyle(color: Colors.white) )),
+                        width: 140,
+                        child: QuantityButton(
+                            widget.cartItem.quantity, _changeQuantity)),
+                  ],
+                ),
+              ),
+            ),
+            Flexible(
+              flex: 3,
+              child: Padding(
+                padding: const EdgeInsets.only(top: 10),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.start,
+                  children: [
+                    IconButton(
+                        onPressed: () {
+                          setState(() {
+                            Provider.of<CartProvider>(context, listen: false)
+                                .removeProductFromCart(widget.cartItem.product);
+                          });
+                        },
+                        icon: const Icon(Icons.close),
+                        color: Colors.grey),
+                    const SizedBox(
+                      height: 5,
+                    ),
+                    Text(
+                      "R\$ ${myCart.getProductTotalPrice(widget.cartItem.product).toStringAsFixed(2)}",
+                      style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ],
-                  )   
-                ),           
-              ],
-            ),
-          ),
-          const SizedBox(
-            width: 25,
-            height: 0,
-          ),
-          Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.end,
-            children: [
-             IconButton(
-                onPressed: (){
-                  setState(() {
-                    carts.removeAt(index);
-                  });
-                },
-                icon: const Icon(Icons.close), color: Colors.grey),              
-              Row(
-                children: [
-                  const Text("R\$ ", style: TextStyle(color: Colors.black, fontFamily: "Acme",fontSize: 20)),
-                  Text(cartState.price.toStringAsFixed(2),style: const TextStyle(color: Colors.black, fontFamily: "Acme",fontSize: 20)),
-                ],
-              )
-          ],)
-        ],
-      ),
-    );
+                ),
+              ),
+            )
+          ],
+        ));
   }
 }

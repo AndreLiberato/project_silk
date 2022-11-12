@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:provider/provider.dart';
+import 'package:vish/screens/cart_screen.dart';
 
-import '../providers/groceries_lists_provider.dart';
 import '../navigation/my_bottom_navbar.dart';
 import 'my_groceries_lists_screen.dart';
 import 'products_overview_screen.dart';
@@ -24,7 +23,8 @@ class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> _screens = [
     const ProductsOverviewScreen(),
-    MyGroceriesListsScreen()
+    MyGroceriesListsScreen(),
+    const CartScreen(),
   ];
 
   @override

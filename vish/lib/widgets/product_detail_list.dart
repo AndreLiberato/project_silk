@@ -4,9 +4,10 @@ import '../models/product.dart';
 import 'quantity_button.dart';
 
 class ProductDetailList extends StatefulWidget {
-  Product product;
+  final Product product;
+  final Function changeQuantity;
 
-  ProductDetailList(this.product);
+  ProductDetailList(this.product, this.changeQuantity);
 
   @override
   State<ProductDetailList> createState() => _ProductDetailListState();
@@ -14,11 +15,19 @@ class ProductDetailList extends StatefulWidget {
 
 class _ProductDetailListState extends State<ProductDetailList> {
   late final rating;
+  int _quantity = 1;
 
   @override
   void initState() {
     super.initState();
     rating = widget.product.rating;
+  }
+
+  void _changeQuantity(int quantityChange) {
+    setState(() {
+      _quantity += quantityChange;
+      widget.changeQuantity(_quantity);
+    });
   }
 
   List<Icon> _rateBuilder() {
@@ -215,10 +224,16 @@ class _ProductDetailListState extends State<ProductDetailList> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const QuantityButton(),
-                  Text(
-                    "R\$ ${widget.product.price}",
-                    style: Theme.of(context).textTheme.headline4,
+                  Flexible(
+                      fit: FlexFit.tight,
+                      flex: 2,
+                      child: QuantityButton(_quantity, _changeQuantity)),
+                  Flexible(
+                    flex: 3,
+                    child: Text(
+                      "R\$ ${widget.product.price * _quantity}",
+                      style: Theme.of(context).textTheme.headline4,
+                    ),
                   )
                 ],
               ),
