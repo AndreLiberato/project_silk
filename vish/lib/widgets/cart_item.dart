@@ -91,7 +91,7 @@ class CartState extends State<CartItem> {
                       height: 5,
                     ),
                     Text(
-                      "R\$ ${widget.cartItem.product.price.toStringAsFixed(2)}",
+                      "R\$ ${myCart.getProductTotalPrice(widget.cartItem.product).toStringAsFixed(2)}",
                       style: const TextStyle(fontSize: 16, color: Colors.black),
                     ),
                   ],

@@ -4,9 +4,10 @@ import '../models/product.dart';
 import 'quantity_button.dart';
 
 class ProductDetailList extends StatefulWidget {
-  Product product;
+  final Product product;
+  final Function changeQuantity;
 
-  ProductDetailList(this.product);
+  ProductDetailList(this.product, this.changeQuantity);
 
   @override
   State<ProductDetailList> createState() => _ProductDetailListState();
@@ -25,6 +26,7 @@ class _ProductDetailListState extends State<ProductDetailList> {
   void _changeQuantity(int quantityChange) {
     setState(() {
       _quantity += quantityChange;
+      widget.changeQuantity(_quantity);
     });
   }
 
@@ -229,7 +231,7 @@ class _ProductDetailListState extends State<ProductDetailList> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                      "R\$ ${widget.product.price}",
+                      "R\$ ${widget.product.price * _quantity}",
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   )

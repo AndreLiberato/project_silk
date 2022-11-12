@@ -59,7 +59,7 @@ class ProductItem extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: InkWell(
-                    onTap: () => myCart.addProductToCart(product),
+                    onTap: () => myCart.addProductToCart(product, 1),
                     child: const Icon(
                       Icons.add,
                       size: 30,

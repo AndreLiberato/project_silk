@@ -11,10 +11,10 @@ class CartProvider extends ChangeNotifier {
 
   List<CartProduct> get cartProducts => _cartProducts;
 
-  void addProductToCart(Product product) {
+  void addProductToCart(Product product, int quantityChange) {
     if (_cartProducts.any((cart) => cart.product == product)) {
       int index = _cartProducts.indexWhere((cart) => cart.product == product);
-      _cartProducts.elementAt(index).quantity++;
+      _cartProducts.elementAt(index).quantity += quantityChange;
     } else {
       CartProduct productInCart = CartProduct(
           id: Random().nextInt(100).toString(), product: product, quantity: 1);
@@ -40,6 +40,14 @@ class CartProvider extends ChangeNotifier {
 
     _cartProducts[index] = product;
     notifyListeners();
+  }
+
+  double getProductTotalPrice(Product product) {
+    CartProduct currentProduct = _cartProducts.firstWhere(
+      (cartProduct) => cartProduct.product.id == product.id,
+    );
+    var value = currentProduct.quantity * product.price;
+    return value;
   }
 
   double getTotalValueOfCartItems() {
