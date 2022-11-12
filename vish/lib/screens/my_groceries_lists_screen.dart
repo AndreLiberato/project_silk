@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/groceries_lists.dart';
+import '../navigation/my_drawer.dart';
 import '../widgets/grocery_list_item.dart';
 import '../widgets/my_appbar.dart';
 
@@ -77,7 +78,7 @@ class MyGroceriesListsScreen extends StatelessWidget {
           ),
         ],
       ),
-      drawer: Drawer(),
+      drawer: MyDrawer(),
     );
   }
 }
