@@ -54,7 +54,7 @@ class CartScreen extends StatelessWidget {
                   ))),
         ],
       ),
-      drawer: MyDrawer(),
+      drawer: const MyDrawer(),
     );
   }
 }
