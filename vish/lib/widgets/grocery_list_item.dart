@@ -15,7 +15,7 @@ class GroceryListItem extends StatelessWidget {
   Widget build(BuildContext context) {
     var listsProvider = context.read<GroceriesListsProvider>();
     return Container(
-        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 10),
+        padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
         height: 90,
         alignment: Alignment.center,
         child: Dismissible(
@@ -45,8 +45,7 @@ class GroceryListItem extends StatelessWidget {
               padding: const EdgeInsets.only(right: 10),
               alignment: Alignment.centerRight,
               decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  color: Colors.redAccent.shade400),
+                  borderRadius: BorderRadius.circular(10), color: Colors.red),
               child: const Icon(Icons.delete),
             ),
           ),
@@ -56,7 +55,6 @@ class GroceryListItem extends StatelessWidget {
               onTap: () => Navigator.of(context)
                   .pushNamed("/lista-detalhes", arguments: groceryList),
               leading: Container(
-                padding: const EdgeInsets.all(5),
                 width: 70,
                 height: 70,
                 decoration: BoxDecoration(
@@ -84,10 +82,10 @@ class GroceryListItem extends StatelessWidget {
               ),
               subtitle: Text(
                 groceryList.description,
-                style: const TextStyle(fontSize: 10, color: Colors.black),
+                style: const TextStyle(fontSize: 12, color: Colors.black),
               ),
               trailing: Text("R\$ ${groceryList.getTotalValue()}",
-                  style: const TextStyle(fontSize: 10, color: Colors.black)),
+                  style: const TextStyle(fontSize: 14, color: Colors.black)),
             ),
           ),
         ));
