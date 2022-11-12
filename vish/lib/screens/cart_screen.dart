@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
+import '../navigation/my_drawer.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/my_appbar.dart';
 import '../widgets/cart_list.dart';
@@ -53,7 +54,7 @@ class CartScreen extends StatelessWidget {
                   ))),
         ],
       ),
-      drawer: Drawer(),
+      drawer: const MyDrawer(),
     );
   }
 }
