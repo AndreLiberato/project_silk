@@ -1,15 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/src/widgets/container.dart';
-import 'package:flutter/src/widgets/framework.dart';
 
-class MyBottomNavBar extends StatefulWidget {
-  const MyBottomNavBar({super.key});
+class MyBottomNavBar extends StatelessWidget {
+  final _selectedIndex;
+  final Function _changeScreen;
 
-  @override
-  State<MyBottomNavBar> createState() => _MyBottomNavBarState();
-}
+  MyBottomNavBar(this._selectedIndex, this._changeScreen);
 
-class _MyBottomNavBarState extends State<MyBottomNavBar> {
   @override
   Widget build(BuildContext context) {
     return BottomNavigationBar(
@@ -21,7 +17,8 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
         elevation: 2,
         selectedItemColor: Theme.of(context).primaryColor,
         iconSize: 24,
-        currentIndex: 0,
+        currentIndex: _selectedIndex,
+        onTap: (index) => _changeScreen(index),
         items: const [
           BottomNavigationBarItem(
             label: "Loja",
@@ -30,31 +27,27 @@ class _MyBottomNavBarState extends State<MyBottomNavBar> {
             ),
           ),
           BottomNavigationBarItem(
-            label: "Explorar",
+            label: "Listas",
             icon: Icon(
-              Icons.manage_search,
-              color: Colors.black87,
+              Icons.list,
             ),
           ),
           BottomNavigationBarItem(
             label: "Carrinho",
             icon: Icon(
               Icons.shopping_cart,
-              color: Colors.black87,
             ),
           ),
           BottomNavigationBarItem(
-            label: "Favoritos",
+            label: "Pedidos",
             icon: Icon(
-              Icons.favorite_border,
-              color: Colors.black87,
+              Icons.list_alt,
             ),
           ),
           BottomNavigationBarItem(
             label: "Conta",
             icon: Icon(
               Icons.manage_accounts_outlined,
-              color: Colors.black87,
             ),
           ),
         ]);

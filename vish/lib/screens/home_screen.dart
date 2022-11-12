@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
+import '../providers/groceries_lists_provider.dart';
 import '../navigation/my_bottom_navbar.dart';
-import '../widgets/categories_list.dart';
-import '../widgets/products_list.dart';
-import '/widgets/search_input.dart';
+import 'my_groceries_lists_screen.dart';
+import 'products_overview_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -13,60 +14,27 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  var _selectedIndex = 0;
+
+  void _changeScreen(int index) {
+    setState(() {
+      _selectedIndex = index;
+    });
+  }
+
+  final List<Widget> _screens = [
+    const ProductsOverviewScreen(),
+    MyGroceriesListsScreen()
+  ];
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          "VISH",
-          style: TextStyle(
-              shadows: [Shadow(color: Colors.black26, offset: Offset(1, 3))],
-              color: Color(0xFFf65c05),
-              fontFamily: "Cherry Bomb",
-              fontSize: 24),
-        ),
-        backgroundColor: Colors.transparent,
-        centerTitle: true,
-        elevation: 0,
-        actions: [
-          IconButton(
-              onPressed: () {},
-              icon: const Icon(
-                Icons.notifications,
-                size: 24,
-                color: Colors.grey,
-              ))
-        ],
+      body: IndexedStack(
+        index: _selectedIndex,
+        children: _screens,
       ),
-      body: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          const Center(child: SearchInput()),
-          const SizedBox(
-            height: 10,
-          ),
-          CategoriesList(),
-          const SizedBox(
-            height: 25,
-          ),
-          const Padding(
-            padding: EdgeInsets.symmetric(vertical: 0, horizontal: 20),
-            child: Text(
-              "Produtos",
-              style: TextStyle(
-                  fontSize: 24, color: Colors.black, fontFamily: "Acme"),
-            ),
-          ),
-          const SizedBox(
-            height: 20,
-          ),
-          Expanded(
-              child: ProductsList(
-            false,
-          )),
-        ],
-      ),
-      bottomNavigationBar: const MyBottomNavBar(),
+      bottomNavigationBar: MyBottomNavBar(_selectedIndex, _changeScreen),
     );
   }
 }
