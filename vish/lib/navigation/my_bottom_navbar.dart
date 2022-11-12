@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class MyBottomNavBar extends StatelessWidget {
-  final _selectedIndex;
+  final int _selectedIndex;
   final Function _changeScreen;
 
   MyBottomNavBar(this._selectedIndex, this._changeScreen);

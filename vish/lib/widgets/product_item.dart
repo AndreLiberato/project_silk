@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../models/product.dart';
+import '../providers/cart_provider.dart';
 
 class ProductItem extends StatelessWidget {
   Product product;
@@ -9,6 +11,7 @@ class ProductItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var myCart = Provider.of<CartProvider>(context, listen: false);
     return Card(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(18),
@@ -56,7 +59,7 @@ class ProductItem extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: InkWell(
-                    onTap: () {},
+                    onTap: () => myCart.addProductToCart(product),
                     child: const Icon(
                       Icons.add,
                       size: 30,
