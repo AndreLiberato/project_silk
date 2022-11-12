@@ -17,7 +17,9 @@ class CartProvider extends ChangeNotifier {
       _cartProducts.elementAt(index).quantity += quantityChange;
     } else {
       CartProduct productInCart = CartProduct(
-          id: Random().nextInt(100).toString(), product: product, quantity: 1);
+          id: Random().nextInt(100).toString(),
+          product: product,
+          quantity: quantityChange);
       _cartProducts.add(productInCart);
     }
     notifyListeners();
