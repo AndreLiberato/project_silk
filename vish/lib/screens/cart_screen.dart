@@ -18,7 +18,10 @@ class CartScreen extends StatelessWidget {
           Expanded(
             child: CartList(),
           ),
-          Padding(
+          Container(
+              width: 500,
+              height: 60,
+              margin: const EdgeInsets.only(bottom: 10),
               padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
               child: TextButton(
                   style: ButtonStyle(
@@ -32,18 +35,19 @@ class CartScreen extends StatelessWidget {
                   ),
                   onPressed: () {},
                   child: ListTile(
+                    dense: true,
                     title: const Text("Finalizar Pedido",
                         style: TextStyle(
                             color: Colors.black,
                             fontFamily: "Acme",
-                            fontSize: 24),
+                            fontSize: 22),
                         textAlign: TextAlign.center),
                     trailing: Text(
                       "R\$ ${myCart.getTotalValueOfCartItems().toStringAsFixed(2)}",
                       style: const TextStyle(
                           color: Colors.black,
                           fontFamily: "Acme",
-                          fontSize: 24),
+                          fontSize: 20),
                       textAlign: TextAlign.center,
                     ),
                   ))),
