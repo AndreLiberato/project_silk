@@ -48,10 +48,18 @@ class MyGroceriesListsScreen extends StatelessWidget {
                         labelColor: Theme.of(context).primaryColor,
                         tabs: const [
                           Tab(
-                            text: "Manuais",
+                            child: Text(
+                              "Manuais",
+                              style: TextStyle(
+                                  color: Colors.black, fontFamily: "Acme"),
+                            ),
                           ),
                           Tab(
-                            text: "Automatizadas",
+                            child: Text(
+                              "Automáticas",
+                              style: TextStyle(
+                                  color: Colors.black, fontFamily: "Acme"),
+                            ),
                           )
                         ],
                       ),

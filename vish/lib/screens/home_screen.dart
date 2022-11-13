@@ -4,6 +4,7 @@ import 'package:vish/screens/cart_screen.dart';
 
 import '../navigation/my_bottom_navbar.dart';
 import 'my_groceries_lists_screen.dart';
+import 'order_screen.dart';
 import 'products_overview_screen.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -26,6 +27,7 @@ class _HomeScreenState extends State<HomeScreen> {
     const ProductsOverviewScreen(),
     MyGroceriesListsScreen(),
     const CartScreen(),
+    const OrderScreen()
   ];
 
   @override
