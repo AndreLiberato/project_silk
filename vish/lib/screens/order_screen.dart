@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../data/orders.dart';
+import '../navigation/my_drawer.dart';
 import '../widgets/orders_list.dart';
 import '../widgets/finishedOrders_list.dart';
 
@@ -14,26 +14,33 @@ class OrderScreen extends StatelessWidget {
       length: 2,
       child: Scaffold(
         appBar: AppBar(
-          leading: IconButton(icon: const Icon(Icons.arrow_back),onPressed:(){},color: Colors.black),
-          backgroundColor:Colors.transparent,
+          iconTheme: const IconThemeData(color: Colors.grey),
+          backgroundColor: Colors.transparent,
           elevation: 0,
-          title: const Text('Pedidos', style: TextStyle(color: Colors.black, fontFamily: "Acme")),
+          centerTitle: true,
+          title: const Text('Pedidos',
+              style: TextStyle(
+                  color: Colors.black, fontFamily: "Acme", fontSize: 24)),
           bottom: const PreferredSize(
-            preferredSize: Size.fromHeight(75),
+            preferredSize: Size.fromHeight(48),
             child: TabBar(
               labelColor: Color(0xFFf65c05),
               indicatorColor: Color(0xFFf65c05),
               unselectedLabelColor: Colors.black,
               tabs: <Widget>[
                 Tab(
-                  child: Text('Em andamento', style: TextStyle(color: Colors.black, fontFamily: "Acme")),
+                  child: Text('Em andamento',
+                      style:
+                          TextStyle(color: Colors.black, fontFamily: "Acme")),
                 ),
                 Tab(
-                  child: Text('Histórico', style: TextStyle(color: Colors.black, fontFamily: "Acme")),
+                  child: Text('Histórico',
+                      style:
+                          TextStyle(color: Colors.black, fontFamily: "Acme")),
                 ),
               ],
             ),
-          ), 
+          ),
         ),
         body: TabBarView(
           children: <Widget>[
@@ -45,6 +52,7 @@ class OrderScreen extends StatelessWidget {
             ),
           ],
         ),
+        drawer: const MyDrawer(),
       ),
     );
   }

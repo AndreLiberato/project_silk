@@ -12,8 +12,19 @@ class ProductsOverviewScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: MyAppBar(
-        title: "VISH",
+      appBar: AppBar(
+        title: const Text(
+          "VISH",
+          style: TextStyle(
+              shadows: [Shadow(color: Colors.black26, offset: Offset(1, 3))],
+              color: Color(0xFFf65c05),
+              fontFamily: "Cherry Bomb",
+              fontSize: 30),
+        ),
+        backgroundColor: Colors.transparent,
+        centerTitle: true,
+        elevation: 0,
+        iconTheme: const IconThemeData(color: Colors.grey, size: 24),
         actions: [
           IconButton(
               onPressed: () {},
