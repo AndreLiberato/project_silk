@@ -1,21 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../data/groceries_lists.dart';
 import '../navigation/my_drawer.dart';
+import '../providers/groceries_lists_provider.dart';
 import '../widgets/grocery_list_item.dart';
 import '../widgets/my_appbar.dart';
 
 class MyGroceriesListsScreen extends StatelessWidget {
-  var manualLists = groceriesLists
-      .where(
-        (groceryList) => groceryList.hasAutoPayment == false,
-      )
-      .toList();
-  var autoLists = groceriesLists
-      .where(
-        (groceryList) => groceryList.hasAutoPayment == true,
-      )
-      .toList();
   void _createGroceriesList(BuildContext context) {
     Navigator.of(context).pushNamed("/lista-form");
   }
@@ -26,6 +18,7 @@ class MyGroceriesListsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    var groceriesListProvider = context.watch<GroceriesListsProvider>();
     return Scaffold(
       appBar: MyAppBar(title: "Minhas Listas", actions: [
         IconButton(
@@ -68,13 +61,17 @@ class MyGroceriesListsScreen extends StatelessWidget {
                             physics: const NeverScrollableScrollPhysics(),
                             children: [
                               ListView.builder(
-                                  itemCount: manualLists.length,
+                                  itemCount:
+                                      groceriesListProvider.manualLists.length,
                                   itemBuilder: ((context, index) =>
-                                      GroceryListItem(manualLists[index]))),
+                                      GroceryListItem(groceriesListProvider
+                                          .manualLists[index]))),
                               ListView.builder(
-                                itemCount: autoLists.length,
+                                itemCount:
+                                    groceriesListProvider.autoLists.length,
                                 itemBuilder: ((context, index) =>
-                                    GroceryListItem(autoLists[index])),
+                                    GroceryListItem(groceriesListProvider
+                                        .autoLists[index])),
                               )
                             ]),
                       ),

@@ -26,21 +26,30 @@ class GroceryListItem extends StatelessWidget {
             return await showDialog<bool>(
               context: context,
               builder: (ctx) => AlertDialog(
-                title: const Text("Tem certeza que deseja excluir a lista?"),
+                title: const Text(
+                  "Tem certeza que deseja excluir a lista?",
+                  style: TextStyle(color: Colors.black),
+                ),
                 actions: [
                   TextButton(
-                    onPressed: () => Navigator.of(context).pop(false),
-                    child: const Text('Sim'),
+                    onPressed: () => Navigator.of(context).pop(true),
+                    child: const Text(
+                      'Sim',
+                      style: TextStyle(color: Colors.green),
+                    ),
                   ),
                   TextButton(
-                      onPressed: () => Navigator.of(context).pop(true),
-                      child: const Text('Não')),
+                      onPressed: () => Navigator.of(context).pop(false),
+                      child: const Text(
+                        'Não',
+                        style: TextStyle(color: Colors.red),
+                      )),
                 ],
               ),
             );
           },
           background: Padding(
-            padding: const EdgeInsets.symmetric(vertical: 5, horizontal: 0),
+            padding: const EdgeInsets.symmetric(vertical: 3, horizontal: 0),
             child: Container(
               padding: const EdgeInsets.only(right: 10),
               alignment: Alignment.centerRight,
@@ -76,16 +85,42 @@ class GroceryListItem extends StatelessWidget {
                   ),
                 ),
               ),
-              title: Text(
-                groceryList.name,
-                style: const TextStyle(fontSize: 16, color: Colors.black),
+              title: Text.rich(
+                TextSpan(
+                  children: [
+                    TextSpan(
+                      text: groceryList.name,
+                      style: const TextStyle(fontSize: 18, color: Colors.black),
+                    ),
+                    WidgetSpan(
+                      child: groceryList.hasAutoPayment
+                          ? Tooltip(
+                              triggerMode: TooltipTriggerMode.tap,
+                              showDuration: const Duration(seconds: 1),
+                              message: DateFormat(
+                                      "'renovação em: ' dd/MM/yyyy", "pt_BR")
+                                  .format(groceryList.paymentDate!)
+                                  .toString(),
+                              child: const Icon(
+                                Icons.timer,
+                                color: Colors.green,
+                              ),
+                            )
+                          : const Icon(
+                              Icons.timer,
+                              color: Colors.grey,
+                            ),
+                    )
+                  ],
+                ),
               ),
               subtitle: Text(
                 groceryList.description,
                 style: const TextStyle(fontSize: 12, color: Colors.black),
               ),
-              trailing: Text("R\$ ${groceryList.getTotalValue()}",
-                  style: const TextStyle(fontSize: 14, color: Colors.black)),
+              trailing: Text(
+                  "R\$ ${groceryList.getTotalValue().toStringAsFixed(2)}",
+                  style: const TextStyle(fontSize: 16, color: Colors.black)),
             ),
           ),
         ));

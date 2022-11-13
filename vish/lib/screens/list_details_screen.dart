@@ -26,27 +26,30 @@ class ListDetailsScreen extends StatelessWidget {
                     children: [
                       Text(
                         "Nome: ${myList.name}",
-                        style: TextStyle(color: Colors.black, fontSize: 16),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 16),
                       ),
                       const SizedBox(
                         height: 10,
                       ),
                       Text(
                         "Descrição: ${myList.description}",
-                        style: TextStyle(color: Colors.black, fontSize: 12),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 12),
                       ),
                       const SizedBox(
                         height: 25,
                       ),
                       Text(
                         "Criação:${DateFormat("dd 'de' MMMM 'de' yyyy", "pt_BR").format(myList.creationDate)}",
-                        style: TextStyle(color: Colors.black, fontSize: 12),
+                        style:
+                            const TextStyle(color: Colors.black, fontSize: 12),
                       ),
                     ],
                   ),
                   Text(
-                    "R\$ ${myList.totalValue}",
-                    style: TextStyle(color: Colors.black, fontSize: 16),
+                    "R\$ ${myList.totalValue.toStringAsFixed(2)}",
+                    style: const TextStyle(color: Colors.black, fontSize: 16),
                   ),
                 ],
               )
