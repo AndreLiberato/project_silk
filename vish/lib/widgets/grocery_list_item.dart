@@ -59,7 +59,7 @@ class GroceryListItem extends StatelessWidget {
             ),
           ),
           child: Hero(
-            tag: "lista-item-card",
+            tag: "lista-item-card-${groceryList.id}",
             child: Card(
               elevation: 3,
               child: ListTile(

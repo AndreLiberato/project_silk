@@ -26,4 +26,16 @@ List<GroceryList> groceriesLists = [
       ListProduct(products[6], 50),
     ],
   ),
+  GroceryList(
+      id: "5988496mnoe",
+      name: "Grãos",
+      description: "Compra de arroz e feijão",
+      listProducts: [
+        ListProduct(products[4], 3),
+        ListProduct(products[3], 3),
+      ],
+      hasAutoPayment: true,
+      paymentDate: DateTime.now().add(const Duration(
+        days: 12,
+      ))),
 ];

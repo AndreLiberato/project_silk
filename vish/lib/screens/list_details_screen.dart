@@ -24,7 +24,7 @@ class ListDetailsScreen extends StatelessWidget {
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
           child: Hero(
-            tag: "lista-item-card",
+            tag: "lista-item-card-${myList.id}",
             child: Card(
               shape: RoundedRectangleBorder(
                 borderRadius: BorderRadius.circular(25),
@@ -110,7 +110,7 @@ class ListDetailsScreen extends StatelessWidget {
                               child: Text(
                                 "R\$ ${myList.totalValue.toStringAsFixed(2)}",
                                 style: const TextStyle(
-                                    color: Colors.black, fontSize: 16),
+                                    color: Colors.green, fontSize: 16),
                               ),
                             ),
                           ],
@@ -123,7 +123,7 @@ class ListDetailsScreen extends StatelessWidget {
                             color: Colors.black,
                           )),
                       const Flexible(
-                        flex: 1,
+                        flex: 2,
                         child: SizedBox(
                           height: 20,
                           child: Text(
@@ -143,7 +143,7 @@ class ListDetailsScreen extends StatelessWidget {
                           )),
                       Flexible(
                         fit: FlexFit.tight,
-                        flex: 11,
+                        flex: 13,
                         child: ListView.builder(
                             itemCount: myList.listProducts.length,
                             itemBuilder: ((context, index) =>

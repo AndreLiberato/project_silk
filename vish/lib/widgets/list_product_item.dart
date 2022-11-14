@@ -10,6 +10,9 @@ class ListProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
+        leading: CircleAvatar(
+            backgroundColor: Colors.transparent,
+            child: Image.network(listProduct.product.imageUrl[0])),
         title: Text(
           listProduct.product.name,
           style: const TextStyle(fontSize: 12, color: Colors.black),
