@@ -12,14 +12,28 @@ class ListDetailsScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     var myList = ModalRoute.of(context)!.settings.arguments as GroceryList;
     return Scaffold(
+      appBar: AppBar(
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        title: const Text('Detalhes',
+            style: TextStyle(
+                color: Colors.black, fontFamily: "Acme", fontSize: 24)),
+      ),
       body: Center(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
           child: Hero(
             tag: "lista-item-card",
             child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
+              ),
               elevation: 10,
-              child: Padding(
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(25)),
                 padding: const EdgeInsets.all(15),
                 child: SizedBox(
                   height: 500,
@@ -28,7 +42,7 @@ class ListDetailsScreen extends StatelessWidget {
                     children: [
                       Flexible(
                         fit: FlexFit.tight,
-                        flex: 2,
+                        flex: 4,
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [
@@ -40,7 +54,7 @@ class ListDetailsScreen extends StatelessWidget {
                                 children: [
                                   Flexible(
                                     fit: FlexFit.tight,
-                                    flex: 1,
+                                    flex: 3,
                                     child: Text(
                                       "Nome: ${myList.name}",
                                       style: const TextStyle(
@@ -54,7 +68,7 @@ class ListDetailsScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 1,
+                                    flex: 3,
                                     child: Text(
                                       "Descrição: ${myList.description}",
                                       style: const TextStyle(
@@ -68,23 +82,26 @@ class ListDetailsScreen extends StatelessWidget {
                                     ),
                                   ),
                                   Flexible(
-                                    flex: 2,
+                                    flex: 3,
                                     child: Text(
-                                      "Criação:${DateFormat("dd 'de' MMMM 'de' yyyy", "pt_BR").format(myList.creationDate)}",
+                                      "Criação:${DateFormat("dd 'de' MMM 'de' yyyy", "pt_BR").format(myList.creationDate)}",
                                       style: const TextStyle(
                                           color: Colors.black, fontSize: 12),
                                     ),
                                   ),
-                                  myList.hasAutoPayment
-                                      ? Text(
-                                          "Renovação de pagamento:${DateFormat("dd 'de' MMMM 'de' yyyy", "pt_BR").format(myList.paymentDate!)}",
-                                          style: const TextStyle(
-                                              color: Colors.black,
-                                              fontSize: 12),
-                                        )
-                                      : const SizedBox(
-                                          height: 10,
-                                        ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: myList.hasAutoPayment
+                                        ? Text(
+                                            "Renovação:${DateFormat("dd 'de' MMM 'de' yyyy", "pt_BR").format(myList.paymentDate!)}",
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12),
+                                          )
+                                        : const SizedBox(
+                                            height: 5,
+                                          ),
+                                  ),
                                 ],
                               ),
                             ),
@@ -100,6 +117,12 @@ class ListDetailsScreen extends StatelessWidget {
                         ),
                       ),
                       const Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.black,
+                          )),
+                      const Flexible(
                         flex: 1,
                         child: SizedBox(
                           height: 20,
@@ -112,14 +135,20 @@ class ListDetailsScreen extends StatelessWidget {
                           ),
                         ),
                       ),
+                      const Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.black,
+                          )),
                       Flexible(
                         fit: FlexFit.tight,
-                        flex: 6,
+                        flex: 11,
                         child: ListView.builder(
                             itemCount: myList.listProducts.length,
                             itemBuilder: ((context, index) =>
                                 ListProductItem(myList.listProducts[index]))),
-                      )
+                      ),
                     ],
                   ),
                 ),
