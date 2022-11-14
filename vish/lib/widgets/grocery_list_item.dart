@@ -58,69 +58,74 @@ class GroceryListItem extends StatelessWidget {
               child: const Icon(Icons.delete),
             ),
           ),
-          child: Card(
-            elevation: 3,
-            child: ListTile(
-              onTap: () => Navigator.of(context)
-                  .pushNamed("/lista-detalhes", arguments: groceryList),
-              leading: Container(
-                width: 70,
-                height: 70,
-                decoration: BoxDecoration(
-                  color: Theme.of(context).primaryColor,
-                  borderRadius: BorderRadius.circular(10),
+          child: Hero(
+            tag: "lista-item-card",
+            child: Card(
+              elevation: 3,
+              child: ListTile(
+                onTap: () => Navigator.of(context)
+                    .pushNamed("/lista-detalhes", arguments: groceryList),
+                leading: Container(
+                  width: 70,
+                  height: 70,
+                  decoration: BoxDecoration(
+                    color: Theme.of(context).primaryColor,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Center(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        const Text(
+                          "Criação",
+                          style: TextStyle(fontSize: 10),
+                        ),
+                        Text(DateFormat('dd MMM', "pt_BR")
+                            .format(groceryList.creationDate)),
+                        Text(DateFormat('yyyy')
+                            .format(groceryList.creationDate)),
+                      ],
+                    ),
+                  ),
                 ),
-                child: Center(
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
+                title: Text.rich(
+                  TextSpan(
                     children: [
-                      const Text(
-                        "Criação",
-                        style: TextStyle(fontSize: 10),
+                      TextSpan(
+                        text: groceryList.name,
+                        style:
+                            const TextStyle(fontSize: 18, color: Colors.black),
                       ),
-                      Text(DateFormat('dd MMM', "pt_BR")
-                          .format(groceryList.creationDate)),
-                      Text(DateFormat('yyyy').format(groceryList.creationDate)),
+                      WidgetSpan(
+                        child: groceryList.hasAutoPayment
+                            ? Tooltip(
+                                triggerMode: TooltipTriggerMode.tap,
+                                showDuration: const Duration(seconds: 1),
+                                message: DateFormat(
+                                        "'renovação em: ' dd/MM/yyyy", "pt_BR")
+                                    .format(groceryList.paymentDate!)
+                                    .toString(),
+                                child: const Icon(
+                                  Icons.timer,
+                                  color: Colors.green,
+                                ),
+                              )
+                            : const Icon(
+                                Icons.timer,
+                                color: Colors.grey,
+                              ),
+                      )
                     ],
                   ),
                 ),
-              ),
-              title: Text.rich(
-                TextSpan(
-                  children: [
-                    TextSpan(
-                      text: groceryList.name,
-                      style: const TextStyle(fontSize: 18, color: Colors.black),
-                    ),
-                    WidgetSpan(
-                      child: groceryList.hasAutoPayment
-                          ? Tooltip(
-                              triggerMode: TooltipTriggerMode.tap,
-                              showDuration: const Duration(seconds: 1),
-                              message: DateFormat(
-                                      "'renovação em: ' dd/MM/yyyy", "pt_BR")
-                                  .format(groceryList.paymentDate!)
-                                  .toString(),
-                              child: const Icon(
-                                Icons.timer,
-                                color: Colors.green,
-                              ),
-                            )
-                          : const Icon(
-                              Icons.timer,
-                              color: Colors.grey,
-                            ),
-                    )
-                  ],
+                subtitle: Text(
+                  groceryList.description,
+                  style: const TextStyle(fontSize: 12, color: Colors.black),
                 ),
+                trailing: Text(
+                    "R\$ ${groceryList.getTotalValue().toStringAsFixed(2)}",
+                    style: const TextStyle(fontSize: 16, color: Colors.black)),
               ),
-              subtitle: Text(
-                groceryList.description,
-                style: const TextStyle(fontSize: 12, color: Colors.black),
-              ),
-              trailing: Text(
-                  "R\$ ${groceryList.getTotalValue().toStringAsFixed(2)}",
-                  style: const TextStyle(fontSize: 16, color: Colors.black)),
             ),
           ),
         ));

@@ -28,55 +28,50 @@ class MyGroceriesListsScreen extends StatelessWidget {
       body: Column(
         children: [
           Expanded(
-            child: Hero(
-              tag: "detalhe-lista",
-              child: Material(
-                child: DefaultTabController(
-                  initialIndex: 0,
-                  length: 2,
-                  child: Column(
-                    children: [
-                      TabBar(
-                        indicatorColor: Theme.of(context).primaryColor,
-                        labelColor: Theme.of(context).primaryColor,
-                        tabs: const [
-                          Tab(
-                            child: Text(
-                              "Manuais",
-                              style: TextStyle(
-                                  color: Colors.black, fontFamily: "Acme"),
-                            ),
+            child: Material(
+              child: DefaultTabController(
+                initialIndex: 0,
+                length: 2,
+                child: Column(
+                  children: [
+                    TabBar(
+                      indicatorColor: Theme.of(context).primaryColor,
+                      labelColor: Theme.of(context).primaryColor,
+                      tabs: const [
+                        Tab(
+                          child: Text(
+                            "Manuais",
+                            style: TextStyle(
+                                color: Colors.black, fontFamily: "Acme"),
                           ),
-                          Tab(
-                            child: Text(
-                              "Automáticas",
-                              style: TextStyle(
-                                  color: Colors.black, fontFamily: "Acme"),
-                            ),
-                          )
-                        ],
-                      ),
-                      Expanded(
-                        child: TabBarView(
-                            physics: const NeverScrollableScrollPhysics(),
-                            children: [
-                              ListView.builder(
-                                  itemCount:
-                                      groceriesListProvider.manualLists.length,
-                                  itemBuilder: ((context, index) =>
-                                      GroceryListItem(groceriesListProvider
-                                          .manualLists[index]))),
-                              ListView.builder(
+                        ),
+                        Tab(
+                          child: Text(
+                            "Automáticas",
+                            style: TextStyle(
+                                color: Colors.black, fontFamily: "Acme"),
+                          ),
+                        )
+                      ],
+                    ),
+                    Expanded(
+                      child: TabBarView(
+                          physics: const NeverScrollableScrollPhysics(),
+                          children: [
+                            ListView.builder(
                                 itemCount:
-                                    groceriesListProvider.autoLists.length,
+                                    groceriesListProvider.manualLists.length,
                                 itemBuilder: ((context, index) =>
                                     GroceryListItem(groceriesListProvider
-                                        .autoLists[index])),
-                              )
-                            ]),
-                      ),
-                    ],
-                  ),
+                                        .manualLists[index]))),
+                            ListView.builder(
+                              itemCount: groceriesListProvider.autoLists.length,
+                              itemBuilder: ((context, index) => GroceryListItem(
+                                  groceriesListProvider.autoLists[index])),
+                            )
+                          ]),
+                    ),
+                  ],
                 ),
               ),
             ),
