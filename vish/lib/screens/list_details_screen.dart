@@ -13,9 +13,13 @@ class ListDetailsScreen extends StatelessWidget {
     var myList = ModalRoute.of(context)!.settings.arguments as GroceryList;
     return Scaffold(
       appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.grey),
         backgroundColor: Colors.transparent,
         elevation: 0,
         centerTitle: true,
+        leading: IconButton(
+            onPressed: (() => Navigator.of(context).pop()),
+            icon: const Icon(Icons.arrow_back_ios_new)),
         title: const Text('Detalhes',
             style: TextStyle(
                 color: Colors.black, fontFamily: "Acme", fontSize: 24)),

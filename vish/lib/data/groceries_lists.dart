@@ -17,7 +17,7 @@ List<GroceryList> groceriesLists = [
         ListProduct(products[6], 10),
       ],
       hasAutoPayment: true,
-      paymentDate: DateTime.now()),
+      paymentDate: DateTime.now().add(const Duration(days: 30))),
   GroceryList(
     id: "5978496mnoe",
     name: "Cervejas",
