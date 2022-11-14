@@ -127,9 +127,9 @@ class ListDetailsScreen extends StatelessWidget {
                             color: Colors.black,
                           )),
                       const Flexible(
-                        flex: 2,
+                        flex: 3,
                         child: SizedBox(
-                          height: 20,
+                          height: 24,
                           child: Text(
                             "Produtos",
                             style: TextStyle(
