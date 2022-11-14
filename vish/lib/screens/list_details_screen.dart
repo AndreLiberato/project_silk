@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:vish/data/groceries_lists.dart';
 import 'package:vish/models/grocery_list.dart';
+
+import '../widgets/list_product_item.dart';
 
 class ListDetailsScreen extends StatelessWidget {
   const ListDetailsScreen({super.key});
@@ -8,52 +11,153 @@ class ListDetailsScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var myList = ModalRoute.of(context)!.settings.arguments as GroceryList;
-    return Hero(
-      tag: "detalhe-lista",
-      child: Scaffold(
-        body: Padding(
-          padding: const EdgeInsets.all(15),
-          child: Column(
-            children: [
-              const SizedBox(
-                height: 30,
+    return Scaffold(
+      appBar: AppBar(
+        iconTheme: const IconThemeData(color: Colors.grey),
+        backgroundColor: Colors.transparent,
+        elevation: 0,
+        centerTitle: true,
+        leading: IconButton(
+            onPressed: (() => Navigator.of(context).pop()),
+            icon: const Icon(Icons.arrow_back_ios_new)),
+        title: const Text('Detalhes',
+            style: TextStyle(
+                color: Colors.black, fontFamily: "Acme", fontSize: 24)),
+      ),
+      body: Center(
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 30),
+          child: Hero(
+            tag: "lista-item-card-${myList.id}",
+            child: Card(
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(25),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                children: [
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+              elevation: 10,
+              child: Container(
+                decoration: BoxDecoration(
+                    border: Border.all(color: Colors.black),
+                    borderRadius: BorderRadius.circular(25)),
+                padding: const EdgeInsets.all(15),
+                child: SizedBox(
+                  height: 500,
+                  width: 500,
+                  child: Column(
                     children: [
-                      Text(
-                        "Nome: ${myList.name}",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 16),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 4,
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Flexible(
+                              fit: FlexFit.tight,
+                              flex: 3,
+                              child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Flexible(
+                                    fit: FlexFit.tight,
+                                    flex: 3,
+                                    child: Text(
+                                      "Nome: ${myList.name}",
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 16),
+                                    ),
+                                  ),
+                                  const Flexible(
+                                    flex: 1,
+                                    child: SizedBox(
+                                      height: 10,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 3,
+                                    child: Text(
+                                      "Descrição: ${myList.description}",
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 12),
+                                    ),
+                                  ),
+                                  const Flexible(
+                                    flex: 1,
+                                    child: SizedBox(
+                                      height: 25,
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 3,
+                                    child: Text(
+                                      "Criação:${DateFormat("dd 'de' MMM 'de' yyyy", "pt_BR").format(myList.creationDate)}",
+                                      style: const TextStyle(
+                                          color: Colors.black, fontSize: 12),
+                                    ),
+                                  ),
+                                  Flexible(
+                                    flex: 2,
+                                    child: myList.hasAutoPayment
+                                        ? Text(
+                                            "Renovação:${DateFormat("dd 'de' MMM 'de' yyyy", "pt_BR").format(myList.paymentDate!)}",
+                                            style: const TextStyle(
+                                                color: Colors.black,
+                                                fontSize: 12),
+                                          )
+                                        : const SizedBox(
+                                            height: 5,
+                                          ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                            Flexible(
+                              flex: 1,
+                              child: Text(
+                                "R\$ ${myList.totalValue.toStringAsFixed(2)}",
+                                style: const TextStyle(
+                                    color: Colors.green, fontSize: 16),
+                              ),
+                            ),
+                          ],
+                        ),
                       ),
-                      const SizedBox(
-                        height: 10,
+                      const Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.black,
+                          )),
+                      const Flexible(
+                        flex: 3,
+                        child: SizedBox(
+                          height: 24,
+                          child: Text(
+                            "Produtos",
+                            style: TextStyle(
+                                color: Colors.black,
+                                fontSize: 20,
+                                fontFamily: "Acme"),
+                          ),
+                        ),
                       ),
-                      Text(
-                        "Descrição: ${myList.description}",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 12),
-                      ),
-                      const SizedBox(
-                        height: 25,
-                      ),
-                      Text(
-                        "Criação:${DateFormat("dd 'de' MMMM 'de' yyyy", "pt_BR").format(myList.creationDate)}",
-                        style:
-                            const TextStyle(color: Colors.black, fontSize: 12),
+                      const Flexible(
+                          flex: 1,
+                          child: Divider(
+                            thickness: 1,
+                            color: Colors.black,
+                          )),
+                      Flexible(
+                        fit: FlexFit.tight,
+                        flex: 13,
+                        child: ListView.builder(
+                            itemCount: myList.listProducts.length,
+                            itemBuilder: ((context, index) =>
+                                ListProductItem(myList.listProducts[index]))),
                       ),
                     ],
                   ),
-                  Text(
-                    "R\$ ${myList.totalValue.toStringAsFixed(2)}",
-                    style: const TextStyle(color: Colors.black, fontSize: 16),
-                  ),
-                ],
-              )
-            ],
+                ),
+              ),
+            ),
           ),
         ),
       ),
