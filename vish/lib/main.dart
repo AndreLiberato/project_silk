@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/register_acc_screen.dart';
 import 'providers/cart_provider.dart';
 import 'screens/home_screen.dart';
 import 'providers/groceries_lists_provider.dart';
@@ -10,6 +11,7 @@ import 'screens/categories_screen.dart';
 import 'screens/category_products_screen.dart';
 import 'screens/list_form_screen.dart';
 import '../screens/list_details_screen.dart';
+import 'screens/login_screen.dart';
 import 'screens/order_screen.dart';
 import 'screens/cart_screen.dart';
 import 'screens/product_detail_screen.dart';
@@ -42,7 +44,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('pt', 'BR')],
           debugShowCheckedModeBanner: false,
           title: "Vish-virtual shop",
-          initialRoute: "/",
+          initialRoute: "/login-screen",
           theme: Theme.of(context).copyWith(
               primaryColor: const Color(0xFFf65c05),
               textTheme: const TextTheme(
@@ -56,7 +58,9 @@ class MyApp extends StatelessWidget {
                   headline1: TextStyle(
                       fontSize: 12, fontFamily: "Acme", color: Colors.grey))),
           routes: {
-            "/": (context) => const HomeScreen(),
+            "/login-screen": (context) => LoginScreen(),
+            "/register-screen": (context) => RegisterAccountScreen(),
+            "/home-screen": (context) => const HomeScreen(),
             "/search-results": (context) => const SearchResultsScreen(),
             "/categorias": (context) => CategoriesScreen(),
             "/categoria-produtos": (context) => const CategoryProductsScreen(),
