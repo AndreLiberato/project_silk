@@ -5,7 +5,7 @@ import '../models/list_product.dart';
 List<GroceryList> groceriesLists = [
   GroceryList(
       id: "597846mnoe",
-      name: "Básico",
+      name: "Compras básicas",
       description: "Compras semanais",
       listProducts: [
         ListProduct(products[0], 5),
