@@ -12,10 +12,6 @@ class MyGroceriesListsScreen extends StatelessWidget {
     Navigator.of(context).pushNamed("/lista-form");
   }
 
-  void _editGroceriesList(String nome, BuildContext context) {
-    Navigator.of(context).pushNamed("/lista-form", arguments: nome);
-  }
-
   @override
   Widget build(BuildContext context) {
     var groceriesListProvider = context.watch<GroceriesListsProvider>();
@@ -61,13 +57,25 @@ class MyGroceriesListsScreen extends StatelessWidget {
                             ListView.builder(
                                 itemCount:
                                     groceriesListProvider.manualLists.length,
-                                itemBuilder: ((context, index) =>
-                                    GroceryListItem(groceriesListProvider
-                                        .manualLists[index]))),
+                                itemBuilder: ((context, index) => InkWell(
+                                      onLongPress: () => Navigator.of(context)
+                                          .pushNamed("/lista-form",
+                                              arguments: groceriesListProvider
+                                                  .manualLists[index]),
+                                      child: GroceryListItem(
+                                          groceriesListProvider
+                                              .manualLists[index]),
+                                    ))),
                             ListView.builder(
                               itemCount: groceriesListProvider.autoLists.length,
-                              itemBuilder: ((context, index) => GroceryListItem(
-                                  groceriesListProvider.autoLists[index])),
+                              itemBuilder: ((context, index) => InkWell(
+                                    onLongPress: () => Navigator.of(context)
+                                        .pushNamed("/lista-form",
+                                            arguments: groceriesListProvider
+                                                .autoLists[index]),
+                                    child: GroceryListItem(
+                                        groceriesListProvider.autoLists[index]),
+                                  )),
                             )
                           ]),
                     ),
