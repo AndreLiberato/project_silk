@@ -1,7 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:vish/widgets/list_product_item.dart';
 
-import '../models/product.dart';
+import '../models/list_product.dart';
 import '/models/grocery_list.dart';
 import '../widgets/my_appbar.dart';
 
@@ -13,16 +14,18 @@ class ListFormScreen extends StatefulWidget {
 }
 
 class _ListFormScreenState extends State<ListFormScreen> {
-  GroceryList? groceryList = GroceryList(name: "", id: "1");
+  GroceryList? groceryList;
+  final _nameController = TextEditingController();
+  final _descriptionController = TextEditingController();
   final FocusNode _nameNode = FocusNode();
   final FocusNode _descriptionNode = FocusNode();
   bool _hasAutoPayment = false;
   DateTime? _autoPaymentDate = DateTime.now();
-  List<Product> _products = [];
+  List<ListProduct> _products = [];
   final GlobalKey _formKey = GlobalKey();
 
   @override
-  void initState() {
+  void initialState() {
     super.initState();
     _nameNode.addListener(() {
       setState(() {});
@@ -41,10 +44,14 @@ class _ListFormScreenState extends State<ListFormScreen> {
 
   @override
   Widget build(BuildContext context) {
-    if (ModalRoute.of(context)!.settings.arguments != null) {
+    if (ModalRoute.of(context)!.settings.arguments != null &&
+        groceryList == null) {
       groceryList = ModalRoute.of(context)!.settings.arguments as GroceryList;
-    } else {
-      groceryList = null;
+      _nameController.text = groceryList!.name;
+      _descriptionController.text = groceryList!.description;
+      _products = groceryList!.listProducts;
+      _hasAutoPayment = groceryList!.hasAutoPayment;
+      _autoPaymentDate = groceryList!.paymentDate;
     }
 
     return Scaffold(
@@ -65,8 +72,10 @@ class _ListFormScreenState extends State<ListFormScreen> {
                 height: 10,
               ),
               TextFormField(
+                style: const TextStyle(color: Colors.black),
                 focusNode: _nameNode,
                 cursorColor: Theme.of(context).primaryColor,
+                controller: _nameController,
                 decoration: InputDecoration(
                     labelText: "Nome da lista",
                     labelStyle: TextStyle(
@@ -86,6 +95,8 @@ class _ListFormScreenState extends State<ListFormScreen> {
                 height: 15,
               ),
               TextFormField(
+                style: const TextStyle(color: Colors.black),
+                controller: _descriptionController,
                 focusNode: _descriptionNode,
                 cursorColor: Theme.of(context).primaryColor,
                 decoration: InputDecoration(
@@ -114,6 +125,7 @@ class _ListFormScreenState extends State<ListFormScreen> {
                     style: TextStyle(color: Colors.grey),
                   ),
                   value: _hasAutoPayment,
+                  contentPadding: const EdgeInsets.only(right: 130),
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     setState(() {
@@ -194,7 +206,7 @@ class _ListFormScreenState extends State<ListFormScreen> {
                           context: context,
                           isScrollControlled: true,
                           builder: ((context) {
-                            return SizedBox(
+                            return const SizedBox(
                               height: 500,
                               child: Text(
                                 "Produtos",
@@ -216,12 +228,8 @@ class _ListFormScreenState extends State<ListFormScreen> {
                 fit: FlexFit.tight,
                 child: ListView.builder(
                     itemCount: _products.length,
-                    itemBuilder: ((context, index) => ListTile(
-                          leading: CircleAvatar(
-                              backgroundColor: Colors.transparent,
-                              backgroundImage:
-                                  NetworkImage(_products[index].imageUrl[0])),
-                        ))),
+                    itemBuilder: ((context, index) =>
+                        ListProductItem(_products[index]))),
               )
             ],
           ),
