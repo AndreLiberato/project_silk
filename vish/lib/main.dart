@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/onboarding_screen.dart';
 import 'screens/register_acc_screen.dart';
 import 'providers/cart_provider.dart';
 import 'screens/home_screen.dart';
@@ -44,7 +45,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('pt', 'BR')],
           debugShowCheckedModeBanner: false,
           title: "Vish-virtual shop",
-          initialRoute: "/login-screen",
+          initialRoute: "/onboarding-screen",
           theme: Theme.of(context).copyWith(
               primaryColor: const Color(0xFFf65c05),
               textTheme: const TextTheme(
@@ -58,6 +59,7 @@ class MyApp extends StatelessWidget {
                   headline1: TextStyle(
                       fontSize: 12, fontFamily: "Acme", color: Colors.grey))),
           routes: {
+            "/onboarding-screen": ((context) => OnboardingScreen()),
             "/login-screen": (context) => LoginScreen(),
             "/register-screen": (context) => RegisterAccountScreen(),
             "/home-screen": (context) => const HomeScreen(),
