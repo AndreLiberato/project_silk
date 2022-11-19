@@ -10,6 +10,7 @@ class OrderList extends StatelessWidget {
         padding: const EdgeInsets.symmetric(vertical: 0, horizontal: 20),
         child: ListView.builder(
             itemCount: pedidos.length,
-            itemBuilder: ((context, index) => OrderItem(pedidos[index]))));
+            itemBuilder: ((context, index) => 
+                OrderItem(pedidos[index]))));
   }
 }

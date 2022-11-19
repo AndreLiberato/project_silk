@@ -8,6 +8,7 @@ import 'providers/cart_provider.dart';
 import 'screens/home_screen.dart';
 import 'providers/groceries_lists_provider.dart';
 import 'providers/products_provider.dart';
+import 'providers/orders_provider.dart';
 import 'screens/categories_screen.dart';
 import 'screens/category_products_screen.dart';
 import 'screens/list_form_screen.dart';
@@ -34,7 +35,10 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<GroceriesListsProvider>(
               create: (_) => GroceriesListsProvider()),
-          ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider())
+          ChangeNotifierProvider<CartProvider>(
+              create: (_) => CartProvider()),
+          ChangeNotifierProvider<OrdersProvider>(
+              create: (_) => OrdersProvider()),
         ],
         child: MaterialApp(
           localizationsDelegates: const [
