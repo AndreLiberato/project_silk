@@ -41,6 +41,7 @@ class CartScreen extends StatelessWidget {
                   onPressed: () {
                     if(myOrder.add(index, myCart.getTotalValueOfCartItems())==1){
                       index++;
+                      myCart.clear();
                     }
                   },
                   child: ListTile(
