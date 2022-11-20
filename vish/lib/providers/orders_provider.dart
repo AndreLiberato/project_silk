@@ -11,8 +11,18 @@ class OrdersProvider extends ChangeNotifier {
   List<Order> get orders => _orders;
   List<Order> get finishedOrders => _finishedOrders;
 
-  void add(Order pedido){
-    Order pedidoFinal = Order(id: pedido.id, number: pedido.number, status: 'Entregue', color: Colors.green, valor: pedido.valor);
+  int add(int index, double valorTotal){
+    if(valorTotal>0){
+      Order pedidoNew = Order(id: index, number: index, status: 'Em Andamento', color: Colors.grey, valor: valorTotal);
+      _orders.add(pedidoNew);
+      notifyListeners();
+      return 1;
+    }    
+    return 0;
+  }
+
+  void confirm(Order pedido){
+    Order pedidoFinal = Order(id: pedido.id, number: pedido.number, status: 'Entregue', color: Colors.lightGreen, valor: pedido.valor);
     Order pedidoAntigo = _orders.firstWhere(((elemento) => elemento.id == pedido.id));
     _orders.remove(pedidoAntigo);
     _finishedOrders.add(pedidoFinal);
@@ -28,7 +38,9 @@ class OrdersProvider extends ChangeNotifier {
   }
 
   void remove(Order pedido){
-    
+    Order pedidoRemove = _finishedOrders.firstWhere((elemento) => elemento.id == pedido.id);
+    _finishedOrders.remove(pedidoRemove);
+    notifyListeners();
   }
 
 }

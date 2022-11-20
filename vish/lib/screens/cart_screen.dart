@@ -2,9 +2,12 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import '../navigation/my_drawer.dart';
+import '../providers/orders_provider.dart';
 import '../providers/cart_provider.dart';
 import '../widgets/my_appbar.dart';
 import '../widgets/cart_list.dart';
+
+int index = 1;
 
 class CartScreen extends StatelessWidget {
   const CartScreen({super.key});
@@ -12,6 +15,7 @@ class CartScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     var myCart = Provider.of<CartProvider>(context);
+    var myOrder = Provider.of<OrdersProvider>(context);
     return Scaffold(
       appBar: MyAppBar(title: "Meu carrinho"),
       body: Column(
@@ -34,7 +38,11 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if(myOrder.add(index, myCart.getTotalValueOfCartItems())==1){
+                      index++;
+                    }
+                  },
                   child: ListTile(
                     dense: true,
                     title: const Text("Finalizar Pedido",
