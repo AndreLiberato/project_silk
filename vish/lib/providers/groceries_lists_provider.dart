@@ -23,6 +23,33 @@ class GroceriesListsProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void updateList(GroceryList newGroceryList, GroceryList oldGroceryList) {
+    var isAuto = newGroceryList.hasAutoPayment;
+
+    if (isAuto) {
+      if (oldGroceryList.hasAutoPayment) {
+        var index = _autoLists.indexOf(oldGroceryList);
+        _autoLists.removeAt(index);
+        _autoLists.insert(index, newGroceryList);
+      } else {
+        var index = _manualLists.indexOf(oldGroceryList);
+        _manualLists.removeAt(index);
+        _autoLists.add(newGroceryList);
+      }
+    } else {
+      if (oldGroceryList.hasAutoPayment) {
+        var index = _autoLists.indexOf(oldGroceryList);
+        _autoLists.removeAt(index);
+        _manualLists.add(newGroceryList);
+      } else {
+        var index = _manualLists.indexOf(oldGroceryList);
+        _manualLists.removeAt(index);
+        _manualLists.insert(index, newGroceryList);
+      }
+    }
+    notifyListeners();
+  }
+
   void removeList(GroceryList groceryList) {
     if (groceryList.hasAutoPayment) {
       _autoLists.remove(groceryList);

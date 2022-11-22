@@ -11,6 +11,8 @@ class ProductsProvider extends ChangeNotifier {
       .where((product) => product.categories.contains(_categorySelected))
       .toList();
 
+  List<Product> get allProducts => _produtos;
+
   void changeCategoryFilter(int categoryId) {
     _categorySelected = categoryId;
     notifyListeners();
