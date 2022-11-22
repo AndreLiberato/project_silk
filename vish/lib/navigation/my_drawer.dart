@@ -30,30 +30,6 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.store,
-                size: 16, color: Color.fromRGBO(23, 23, 37, 1)),
-            title: const Text('Minha Loja',
-                style: TextStyle(
-                    color: Color.fromRGBO(23, 23, 37, 1),
-                    fontFamily: "Acme",
-                    fontSize: 16)),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
-            leading: const Icon(Icons.shopping_cart_checkout,
-                size: 16, color: Color.fromRGBO(23, 23, 37, 1)),
-            title: const Text("Minhas Vendas",
-                style: TextStyle(
-                    color: Color.fromRGBO(23, 23, 37, 1),
-                    fontFamily: "Acme",
-                    fontSize: 16)),
-            onTap: () {
-              Navigator.pop(context);
-            },
-          ),
-          ListTile(
             leading: const Icon(Icons.shopping_basket,
                 size: 16, color: Color.fromRGBO(23, 23, 37, 1)),
             title: const Text("Minhas Compras",
