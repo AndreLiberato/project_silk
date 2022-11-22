@@ -59,7 +59,17 @@ class ProductItem extends StatelessWidget {
                     color: Theme.of(context).primaryColor,
                   ),
                   child: InkWell(
-                    onTap: () => myCart.addProductToCart(product, 1),
+                    onTap: () {
+                      myCart.addProductToCart(product, 1);
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                          duration: const Duration(milliseconds: 500),
+                          content:
+                              Text("${product.name} adicionado ao carrinho."),
+                        ),
+                      );
+                    },
                     child: const Icon(
                       Icons.add,
                       size: 30,

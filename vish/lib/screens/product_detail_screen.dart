@@ -23,6 +23,13 @@ class _ProductDetailScreenState extends State<ProductDetailScreen> {
   void _addToCart(Product produto) {
     Provider.of<CartProvider>(context, listen: false)
         .addProductToCart(produto, _quantity);
+    ScaffoldMessenger.of(context).removeCurrentSnackBar();
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        duration: const Duration(milliseconds: 500),
+        content: Text("${produto.name} adicionado ao carrinho."),
+      ),
+    );
   }
 
   @override

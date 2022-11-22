@@ -83,6 +83,15 @@ class OrderState extends State<OrderItem> {
                         onTap: () {
                           setState(() {
                             myOrder.confirm(widget.order);
+                            Navigator.of(context).pop();
+                            ScaffoldMessenger.of(context)
+                                .removeCurrentSnackBar();
+                            ScaffoldMessenger.of(context).showSnackBar(
+                              const SnackBar(
+                                duration: Duration(milliseconds: 500),
+                                content: Text("Pedido concluido!"),
+                              ),
+                            );
                           });
                         }),
                   ),
@@ -97,6 +106,14 @@ class OrderState extends State<OrderItem> {
                     onTap: () {
                       setState(() {
                         myOrder.cancel(widget.order);
+                        Navigator.of(context).pop();
+                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(
+                            duration: Duration(milliseconds: 500),
+                            content: Text("Pedido cancelado!"),
+                          ),
+                        );
                       });
                     },
                   ),

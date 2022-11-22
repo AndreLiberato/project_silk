@@ -39,9 +39,17 @@ class CartScreen extends StatelessWidget {
                     ),
                   ),
                   onPressed: () {
-                    if(myOrder.add(index, myCart.getTotalValueOfCartItems())==1){
+                    if (myOrder.add(index, myCart.getTotalValueOfCartItems()) ==
+                        1) {
                       index++;
                       myCart.clear();
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          duration: Duration(milliseconds: 500),
+                          content: Text("Seu pedido foi computado."),
+                        ),
+                      );
                     }
                   },
                   child: ListTile(
