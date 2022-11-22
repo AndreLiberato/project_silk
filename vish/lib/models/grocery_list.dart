@@ -13,7 +13,7 @@ class GroceryList {
   GroceryList(
       {required this.name,
       required this.id,
-      this.description = "",
+      required this.description,
       this.totalValue = 0.0,
       this.listProducts = const [],
       this.paymentDate,

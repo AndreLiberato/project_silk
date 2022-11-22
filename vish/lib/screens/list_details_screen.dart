@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:vish/data/groceries_lists.dart';
 import 'package:vish/models/grocery_list.dart';
 
 import '../widgets/list_product_item.dart';
@@ -150,8 +149,8 @@ class ListDetailsScreen extends StatelessWidget {
                         flex: 13,
                         child: ListView.builder(
                             itemCount: myList.listProducts.length,
-                            itemBuilder: ((context, index) =>
-                                ListProductItem(myList.listProducts[index]))),
+                            itemBuilder: ((context, index) => ListProductItem(
+                                myList.listProducts[index], false))),
                       ),
                     ],
                   ),

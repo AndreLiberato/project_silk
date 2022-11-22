@@ -1,8 +1,14 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
+import 'package:provider/provider.dart';
 import 'package:vish/widgets/list_product_item.dart';
 
 import '../models/list_product.dart';
+import '../models/product.dart';
+import '../providers/groceries_lists_provider.dart';
+import '../widgets/products_list_selection.dart';
 import '/models/grocery_list.dart';
 import '../widgets/my_appbar.dart';
 
@@ -22,11 +28,13 @@ class _ListFormScreenState extends State<ListFormScreen> {
   bool _hasAutoPayment = false;
   DateTime? _autoPaymentDate = DateTime.now();
   List<ListProduct> _products = [];
-  final GlobalKey _formKey = GlobalKey();
+  final _formKey = GlobalKey<FormState>();
 
   @override
   void initialState() {
     super.initState();
+    _nameController.text = '';
+    _descriptionController.text = '';
     _nameNode.addListener(() {
       setState(() {});
     });
@@ -40,6 +48,63 @@ class _ListFormScreenState extends State<ListFormScreen> {
     super.dispose();
     _nameNode.dispose();
     _descriptionNode.dispose();
+  }
+
+  void _updateProductsInList(List<Product> updatedProducts) {
+    setState(() {
+      _products = updatedProducts.map((product) {
+        if (_products.any((listProduct) => listProduct.product == product)) {
+          return _products
+              .firstWhere((myProduct) => myProduct.product == product);
+        } else {
+          return ListProduct(product, 1);
+        }
+      }).toList();
+    });
+  }
+
+  void _unfocusAllTextFields() {
+    _nameNode.unfocus();
+    _descriptionNode.unfocus();
+  }
+
+  void _updateProductQuantity(ListProduct listProduct) {
+    var updatedProducts = _products.map((product) {
+      if (product.product == listProduct.product) {
+        return listProduct;
+      } else {
+        return product;
+      }
+    }).toList();
+    setState(() {
+      _products = updatedProducts;
+    });
+  }
+
+  void _validateForm() {
+    final isValid = _formKey.currentState!.validate();
+    if (!isValid) {
+      return;
+    }
+
+    _saveGroceryList();
+  }
+
+  void _saveGroceryList() {
+    var newGroceryList = GroceryList(
+      name: _nameController.text,
+      id: Random().nextInt(1000).toString(),
+      description: _descriptionController.text,
+      hasAutoPayment: _hasAutoPayment,
+      listProducts: _products,
+      paymentDate: _hasAutoPayment ? _autoPaymentDate : null,
+    );
+    groceryList == null
+        ? Provider.of<GroceriesListsProvider>(context, listen: false)
+            .addList(newGroceryList)
+        : Provider.of<GroceriesListsProvider>(context, listen: false)
+            .updateList(newGroceryList, groceryList!);
+    Navigator.of(context).pop();
   }
 
   @override
@@ -56,10 +121,16 @@ class _ListFormScreenState extends State<ListFormScreen> {
 
     return Scaffold(
       appBar: MyAppBar(
-          title: groceryList == null ? "Crie sua lista" : "Editando lista"),
+        title: groceryList == null ? "Crie sua lista" : "Editando lista",
+        actions: [
+          IconButton(
+              onPressed: () => _validateForm(), icon: const Icon(Icons.save))
+        ],
+      ),
       body: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 15),
         child: Form(
+          key: _formKey,
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
@@ -71,17 +142,26 @@ class _ListFormScreenState extends State<ListFormScreen> {
               const SizedBox(
                 height: 10,
               ),
-              TextFormField(
-                style: const TextStyle(color: Colors.black),
-                focusNode: _nameNode,
-                cursorColor: Theme.of(context).primaryColor,
-                controller: _nameController,
-                decoration: InputDecoration(
+              SizedBox(
+                height: 60,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  maxLength: 12,
+                  focusNode: _nameNode,
+                  cursorColor: Theme.of(context).primaryColor,
+                  controller: _nameController,
+                  onTap: () {
+                    setState(() {
+                      _descriptionNode.unfocus();
+                      _nameNode.requestFocus();
+                    });
+                  },
+                  decoration: InputDecoration(
                     labelText: "Nome da lista",
                     labelStyle: TextStyle(
                         color: _nameNode.hasFocus
                             ? Theme.of(context).primaryColor
-                            : Colors.grey),
+                            : Colors.black54),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(
@@ -89,22 +169,40 @@ class _ListFormScreenState extends State<ListFormScreen> {
                           width: 3,
                         )),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15))),
+                        borderRadius: BorderRadius.circular(15)),
+                  ),
+                  validator: (name) {
+                    if (name!.isEmpty) {
+                      return "Insira um nome para a lista";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
               ),
               const SizedBox(
                 height: 15,
               ),
-              TextFormField(
-                style: const TextStyle(color: Colors.black),
-                controller: _descriptionController,
-                focusNode: _descriptionNode,
-                cursorColor: Theme.of(context).primaryColor,
-                decoration: InputDecoration(
+              SizedBox(
+                height: 60,
+                child: TextFormField(
+                  style: const TextStyle(color: Colors.black),
+                  maxLength: 30,
+                  controller: _descriptionController,
+                  focusNode: _descriptionNode,
+                  cursorColor: Theme.of(context).primaryColor,
+                  onTap: () {
+                    setState(() {
+                      _nameNode.unfocus();
+                      _descriptionNode.requestFocus();
+                    });
+                  },
+                  decoration: InputDecoration(
                     labelText: "Descrição",
                     labelStyle: TextStyle(
                         color: _descriptionNode.hasFocus
                             ? Theme.of(context).primaryColor
-                            : Colors.grey),
+                            : Colors.black54),
                     focusedBorder: OutlineInputBorder(
                         borderRadius: BorderRadius.circular(15),
                         borderSide: BorderSide(
@@ -112,10 +210,17 @@ class _ListFormScreenState extends State<ListFormScreen> {
                           width: 3,
                         )),
                     border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(15))),
-              ),
-              const SizedBox(
-                height: 15,
+                      borderRadius: BorderRadius.circular(15),
+                    ),
+                  ),
+                  validator: (description) {
+                    if (description!.isEmpty) {
+                      return "Insira uma descrição para a lista";
+                    } else {
+                      return null;
+                    }
+                  },
+                ),
               ),
               CheckboxListTile(
                   dense: true,
@@ -129,7 +234,10 @@ class _ListFormScreenState extends State<ListFormScreen> {
                   activeColor: Theme.of(context).primaryColor,
                   onChanged: (value) {
                     setState(() {
+                      _nameNode.unfocus();
+                      _descriptionNode.unfocus();
                       _hasAutoPayment = value!;
+                      _autoPaymentDate = DateTime.now();
                     });
                   }),
               _hasAutoPayment
@@ -165,7 +273,11 @@ class _ListFormScreenState extends State<ListFormScreen> {
                                   lastDate: DateTime(2050, 12, 31),
                                 ).then((paymentDate) {
                                   setState(() {
-                                    _autoPaymentDate = paymentDate;
+                                    if (paymentDate != null) {
+                                      _autoPaymentDate = paymentDate;
+                                    } else {
+                                      _autoPaymentDate = DateTime.now();
+                                    }
                                   });
                                 }),
                             label: _autoPaymentDate != null
@@ -198,22 +310,31 @@ class _ListFormScreenState extends State<ListFormScreen> {
                     "Produtos",
                     style: TextStyle(
                         color: Colors.black87,
-                        fontSize: 24,
+                        fontSize: 20,
                         fontFamily: "Acme"),
                   ),
                   IconButton(
-                      onPressed: () => showModalBottomSheet(
+                      onPressed: () {
+                        _unfocusAllTextFields();
+                        showModalBottomSheet(
                           context: context,
                           isScrollControlled: true,
+                          shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15)),
                           builder: ((context) {
-                            return const SizedBox(
-                              height: 500,
-                              child: Text(
-                                "Produtos",
-                                style: TextStyle(color: Colors.black),
-                              ),
+                            return Container(
+                              height: 550,
+                              padding: const EdgeInsets.only(
+                                  left: 5, right: 5, top: 30),
+                              child: ProductsListSelection(
+                                  _products
+                                      .map((listProduct) => listProduct.product)
+                                      .toList(),
+                                  _updateProductsInList),
                             );
-                          })),
+                          }),
+                        );
+                      },
                       icon: const Icon(
                         Icons.add,
                         size: 36,
@@ -229,7 +350,7 @@ class _ListFormScreenState extends State<ListFormScreen> {
                 child: ListView.builder(
                     itemCount: _products.length,
                     itemBuilder: ((context, index) =>
-                        ListProductItem(_products[index]))),
+                        ListProductItem(_products[index], true))),
               )
             ],
           ),

@@ -101,7 +101,9 @@ class GroceryListItem extends StatelessWidget {
                               showDuration: const Duration(seconds: 1),
                               message: DateFormat(
                                       "'renovação em: ' dd/MM/yyyy", "pt_BR")
-                                  .format(groceryList.paymentDate!)
+                                  .format(groceryList.hasAutoPayment
+                                      ? groceryList.paymentDate!
+                                      : DateTime.now())
                                   .toString(),
                               child: const Icon(
                                 Icons.timer,
