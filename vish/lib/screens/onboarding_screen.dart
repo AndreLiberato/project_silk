@@ -41,47 +41,49 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
               itemBuilder: (_, i) {
                 return Column(
                   children: [
-                    Stack(
-                      children: <Widget>[
-                        Image.asset(
-                          "assets/images/onboarding_bg.png",
-                          height: 570,
-                          alignment: Alignment.bottomCenter,
-                          fit: BoxFit.cover,
-                        ),
-                        Image.asset(
-                          contents[i].image,
-                          height: 600,
-                          fit: BoxFit.scaleDown,
-                        ),
-                        Padding(
-                          padding: const EdgeInsets.only(left: 20, top: 50),
-                          child: Text(
-                            contents[i].title,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              overflow: TextOverflow.clip,
-                              color: Colors.black,
-                              fontSize: 35,
-                              fontWeight: FontWeight.bold,
+                    Expanded(
+                      child: Stack(
+                        children: <Widget>[
+                          Image.asset(
+                            "assets/images/onboarding_bg.png",
+                            height: 570,
+                            alignment: Alignment.bottomCenter,
+                            fit: BoxFit.cover,
+                          ),
+                          Image.asset(
+                            contents[i].image,
+                            height: 600,
+                            fit: BoxFit.scaleDown,
+                          ),
+                          Padding(
+                            padding: const EdgeInsets.only(left: 20, top: 50),
+                            child: Text(
+                              contents[i].title,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                overflow: TextOverflow.clip,
+                                color: Colors.black,
+                                fontSize: 35,
+                                fontWeight: FontWeight.bold,
+                              ),
                             ),
                           ),
-                        ),
-                        const SizedBox(height: 20),
-                        Padding(
-                          padding: const EdgeInsets.only(
-                              left: 25, right: 25, top: 475),
-                          child: Text(
-                            contents[i].discription,
-                            textAlign: TextAlign.center,
-                            style: const TextStyle(
-                              overflow: TextOverflow.clip,
-                              fontSize: 20,
-                              color: Colors.black87,
+                          const SizedBox(height: 20),
+                          Padding(
+                            padding: const EdgeInsets.only(
+                                left: 25, right: 25, top: 475),
+                            child: Text(
+                              contents[i].discription,
+                              textAlign: TextAlign.center,
+                              style: const TextStyle(
+                                overflow: TextOverflow.clip,
+                                fontSize: 20,
+                                color: Colors.black87,
+                              ),
                             ),
                           ),
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ],
                 );
