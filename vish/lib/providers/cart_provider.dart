@@ -25,6 +25,11 @@ class CartProvider extends ChangeNotifier {
     notifyListeners();
   }
 
+  void clear(){
+    _cartProducts.clear();
+    notifyListeners();
+  }
+
   void removeProductFromCart(Product product) {
     CartProduct productInCart =
         _cartProducts.firstWhere((cart) => cart.product == product);

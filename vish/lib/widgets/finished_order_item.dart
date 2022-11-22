@@ -5,15 +5,15 @@ import 'package:vish/providers/orders_provider.dart';
 
 import '../models/order.dart';
 
-class OrderItem extends StatefulWidget {
+class FinishedOrderItem extends StatefulWidget {
   Order order;
 
-  OrderItem(this.order);
+  FinishedOrderItem(this.order);
 
-  OrderState createState() => OrderState();
+  FinishedOrderState createState() => FinishedOrderState();
 }
 
-class OrderState extends State<OrderItem> {
+class FinishedOrderState extends State<FinishedOrderItem> {
 
   late OrdersProvider myOrder = Provider.of<OrdersProvider>(context, listen: false);
   DateTime data = DateTime.now();
@@ -50,20 +50,11 @@ class OrderState extends State<OrderItem> {
             child: Column(
                     children: <Widget>[
                       ListTile(
-                        leading: const Icon(Icons.check, color: Colors.green, size: 20,),
-                        title: const Text('Confirmar Entrega',style: TextStyle(color: Colors.green, fontSize: 20),),
-                        onTap: (){
-                          setState(() {
-                            myOrder.confirm(widget.order);
-                          });
-                        }          
-                      ),
-                      ListTile(
                        leading: const Icon(Icons.close, color: Colors.red, size: 20,),
-                        title: const Text('Cancelar Pedido',style: TextStyle(color: Colors.red, fontSize: 20)),
+                        title: const Text('Remover Pedido',style: TextStyle(color: Colors.red, fontSize: 20)),
                         onTap: (){
                           setState(() {
-                            myOrder.cancel(widget.order);
+                            myOrder.remove(widget.order);
                           });
                         },          
                       ),

@@ -2,11 +2,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
 
+import 'screens/onboarding_screen.dart';
 import 'screens/register_acc_screen.dart';
 import 'providers/cart_provider.dart';
 import 'screens/home_screen.dart';
 import 'providers/groceries_lists_provider.dart';
 import 'providers/products_provider.dart';
+import 'providers/orders_provider.dart';
 import 'screens/categories_screen.dart';
 import 'screens/category_products_screen.dart';
 import 'screens/list_form_screen.dart';
@@ -33,7 +35,10 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<GroceriesListsProvider>(
               create: (_) => GroceriesListsProvider()),
-          ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider())
+          ChangeNotifierProvider<CartProvider>(
+              create: (_) => CartProvider()),
+          ChangeNotifierProvider<OrdersProvider>(
+              create: (_) => OrdersProvider()),
         ],
         child: MaterialApp(
           localizationsDelegates: const [
@@ -44,7 +49,7 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('pt', 'BR')],
           debugShowCheckedModeBanner: false,
           title: "Vish-virtual shop",
-          initialRoute: "/login-screen",
+          initialRoute: "/onboarding-screen",
           theme: Theme.of(context).copyWith(
               primaryColor: const Color(0xFFf65c05),
               textTheme: const TextTheme(
@@ -58,6 +63,7 @@ class MyApp extends StatelessWidget {
                   headline1: TextStyle(
                       fontSize: 12, fontFamily: "Acme", color: Colors.grey))),
           routes: {
+            "/onboarding-screen": ((context) => OnboardingScreen()),
             "/login-screen": (context) => LoginScreen(),
             "/register-screen": (context) => RegisterAccountScreen(),
             "/home-screen": (context) => const HomeScreen(),

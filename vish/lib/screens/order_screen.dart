@@ -1,14 +1,17 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
 import '../navigation/my_drawer.dart';
 import '../widgets/orders_list.dart';
 import '../widgets/finishedOrders_list.dart';
+import '../providers/orders_provider.dart';
 
 class OrderScreen extends StatelessWidget {
   const OrderScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    var myOrder = Provider.of<OrdersProvider>(context);
     return DefaultTabController(
       initialIndex: 0,
       length: 2,

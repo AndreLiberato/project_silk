@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 
 class Order {
   int id;
-  String number;
+  int number;
   String status;
-  String valor;
+  double valor;
   Color color;
 
   Order(

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../data/orders.dart';
-import 'order_item.dart';
+import 'finished_order_item.dart';
 
 class FinishedOrderList extends StatelessWidget {
   @override
@@ -11,6 +11,6 @@ class FinishedOrderList extends StatelessWidget {
         child: ListView.builder(
             itemCount: pedidosFinalizado.length,
             itemBuilder: ((context, index) =>
-                OrderItem(pedidosFinalizado[index]))));
+                FinishedOrderItem(pedidosFinalizado[index]))));
   }
 }
