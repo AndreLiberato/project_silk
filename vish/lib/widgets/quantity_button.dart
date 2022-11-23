@@ -55,11 +55,13 @@ class _QuantityButtonState extends State<QuantityButton> {
             ),
           ),
           IconButton(
-            onPressed: () => changeQuantity(1),
+            onPressed: () => widget._quantity < 99 ? changeQuantity(1) : null,
             icon: Icon(
               Icons.add_rounded,
               size: 15,
-              color: Theme.of(context).primaryColor,
+              color: widget._quantity < 99
+                  ? Theme.of(context).primaryColor
+                  : Colors.black45,
             ),
           ),
         ],

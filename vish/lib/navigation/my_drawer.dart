@@ -68,11 +68,15 @@ class MyDrawer extends StatelessWidget {
           ListTile(
             leading: const Icon(Icons.logout,
                 size: 16, color: Color.fromRGBO(217, 36, 36, 1)),
-            title: const Text("Sair do Aplicativo",
-                style: TextStyle(
-                    color: Color.fromRGBO(217, 36, 36, 1),
-                    fontFamily: "Acme",
-                    fontSize: 16)),
+            title: GestureDetector(
+              onTap: () =>
+                  Navigator.of(context).pushReplacementNamed("/login-screen"),
+              child: const Text("Sair do Aplicativo",
+                  style: TextStyle(
+                      color: Color.fromRGBO(217, 36, 36, 1),
+                      fontFamily: "Acme",
+                      fontSize: 16)),
+            ),
             onTap: () {
               Navigator.pop(context);
             },

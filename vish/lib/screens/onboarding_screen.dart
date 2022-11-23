@@ -104,12 +104,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
             child: TextButton(
               onPressed: () {
                 if (currentIndex == contents.length - 1) {
-                  Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
-                    ),
-                  );
+                  Navigator.pushReplacementNamed(context, "/login-screen");
                 }
                 _controller.nextPage(
                   duration: const Duration(milliseconds: 100),
