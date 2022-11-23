@@ -192,7 +192,8 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         if (isChecked!) {
-                          Navigator.of(context).pushNamed("/home-screen");
+                          Navigator.of(context)
+                              .pushReplacementNamed("/home-screen");
                         }
                       }
                     },

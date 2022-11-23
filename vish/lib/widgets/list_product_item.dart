@@ -35,7 +35,7 @@ class ListProductItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListTile(
-        contentPadding: const EdgeInsets.all(0),
+        contentPadding: const EdgeInsets.symmetric(vertical: 0, horizontal: 5),
         leading: CircleAvatar(
             backgroundColor: Colors.transparent,
             child: Image.network(listProduct.product.imageUrl[0])),

@@ -231,7 +231,7 @@ class _ProductDetailListState extends State<ProductDetailList> {
                   Flexible(
                     flex: 3,
                     child: Text(
-                      "R\$ ${widget.product.price * _quantity}",
+                      "R\$ ${(widget.product.price * _quantity).toStringAsFixed(2)}",
                       style: Theme.of(context).textTheme.headline4,
                     ),
                   )
