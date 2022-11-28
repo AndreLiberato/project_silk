@@ -40,40 +40,63 @@ class GroceriesListsProvider extends ChangeNotifier {
     }
   }
 
-  void updateList(GroceryList newGroceryList, GroceryList oldGroceryList) {
+  Future<void> updateList(
+      GroceryList newGroceryList, GroceryList oldGroceryList) async {
     var isAuto = newGroceryList.hasAutoPayment;
+    var auth = FirebaseAuth.instance;
+    var user = auth.currentUser;
+    newGroceryList.creatorId = user!.uid;
 
-    if (isAuto) {
-      if (oldGroceryList.hasAutoPayment) {
-        var index = _autoLists.indexOf(oldGroceryList);
-        _autoLists.removeAt(index);
-        _autoLists.insert(index, newGroceryList);
+    try {
+      FirebaseFirestore.instance
+          .collection("grocerylists")
+          .doc(oldGroceryList.id)
+          .update(newGroceryList.toJson());
+      if (isAuto) {
+        if (oldGroceryList.hasAutoPayment) {
+          var index = _autoLists.indexOf(oldGroceryList);
+          _autoLists.removeAt(index);
+          _autoLists.insert(index, newGroceryList);
+        } else {
+          var index = _manualLists.indexOf(oldGroceryList);
+          _manualLists.removeAt(index);
+          _autoLists.add(newGroceryList);
+        }
       } else {
-        var index = _manualLists.indexOf(oldGroceryList);
-        _manualLists.removeAt(index);
-        _autoLists.add(newGroceryList);
+        if (oldGroceryList.hasAutoPayment) {
+          var index = _autoLists.indexOf(oldGroceryList);
+          _autoLists.removeAt(index);
+          _manualLists.add(newGroceryList);
+        } else {
+          var index = _manualLists.indexOf(oldGroceryList);
+          _manualLists.removeAt(index);
+          _manualLists.insert(index, newGroceryList);
+        }
       }
-    } else {
-      if (oldGroceryList.hasAutoPayment) {
-        var index = _autoLists.indexOf(oldGroceryList);
-        _autoLists.removeAt(index);
-        _manualLists.add(newGroceryList);
-      } else {
-        var index = _manualLists.indexOf(oldGroceryList);
-        _manualLists.removeAt(index);
-        _manualLists.insert(index, newGroceryList);
-      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
     }
-    notifyListeners();
   }
 
-  void removeList(GroceryList groceryList) {
-    if (groceryList.hasAutoPayment) {
-      _autoLists.remove(groceryList);
-    } else {
-      _manualLists.remove(groceryList);
+  Future<void> removeList(GroceryList groceryList) async {
+    var auth = FirebaseAuth.instance;
+    var user = auth.currentUser;
+
+    try {
+      FirebaseFirestore.instance
+          .collection("grocerylists")
+          .doc(groceryList.id)
+          .delete();
+      if (groceryList.hasAutoPayment) {
+        _autoLists.remove(groceryList);
+      } else {
+        _manualLists.remove(groceryList);
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
     }
-    notifyListeners();
   }
 
   Future<void> fetchGroceryLists() async {
