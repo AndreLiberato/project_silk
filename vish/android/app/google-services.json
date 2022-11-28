@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "276169172886",
+    "project_id": "vish-groceries-app",
+    "storage_bucket": "vish-groceries-app.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:276169172886:android:46b1d46cbeef3d13ef5fb7",
+        "android_client_info": {
+          "package_name": "com.example.vish"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "276169172886-u081ougg85c01u76gpf4p44sq2otvhfs.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAqKVc14HkLU3lWYNfAtCeSVcYYGLxkMmg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "276169172886-u081ougg85c01u76gpf4p44sq2otvhfs.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

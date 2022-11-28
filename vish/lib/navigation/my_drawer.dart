@@ -1,7 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
+
+  Future<void> _saveLoginInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("loggedIn", false);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -69,17 +76,17 @@ class MyDrawer extends StatelessWidget {
             leading: const Icon(Icons.logout,
                 size: 16, color: Color.fromRGBO(217, 36, 36, 1)),
             title: GestureDetector(
-              onTap: () =>
-                  Navigator.of(context).pushReplacementNamed("/login-screen"),
+              onTap: () {
+                _saveLoginInfo().then((_) => Navigator.pushReplacementNamed(
+                    context, "/check-auth-screen"));
+              },
               child: const Text("Sair do Aplicativo",
                   style: TextStyle(
                       color: Color.fromRGBO(217, 36, 36, 1),
                       fontFamily: "Acme",
                       fontSize: 16)),
             ),
-            onTap: () {
-              Navigator.pop(context);
-            },
+            onTap: () {},
           ),
         ],
       ),
