@@ -1,26 +1,43 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
-import '../data/groceries_lists.dart';
 import '../models/grocery_list.dart';
 
 class GroceriesListsProvider extends ChangeNotifier {
-  final List<GroceryList> _manualLists = groceriesLists
-      .where((groceryList) => groceryList.hasAutoPayment == false)
-      .toList();
-  final List<GroceryList> _autoLists = groceriesLists
-      .where((groceryList) => groceryList.hasAutoPayment == true)
-      .toList();
+  // final List<GroceryList> _manualLists = groceriesLists
+  //     .where((groceryList) => groceryList.hasAutoPayment == false)
+  //     .toList();
+  // final List<GroceryList> _autoLists = groceriesLists
+  //     .where((groceryList) => groceryList.hasAutoPayment == true)
+  //     .toList();
+
+  final List<GroceryList> _manualLists = [];
+  final List<GroceryList> _autoLists = [];
 
   List<GroceryList> get manualLists => _manualLists;
   List<GroceryList> get autoLists => _autoLists;
 
-  void addList(GroceryList groceryList) {
-    if (groceryList.hasAutoPayment) {
-      _autoLists.add(groceryList);
-    } else {
-      _manualLists.add(groceryList);
+  var firebaseCollectionRef =
+      FirebaseFirestore.instance.collection("grocerylists");
+
+  Future<void> addList(GroceryList groceryList) async {
+    var auth = FirebaseAuth.instance;
+    var user = auth.currentUser;
+    groceryList.creatorId = user!.uid;
+    try {
+      FirebaseFirestore.instance
+          .collection("grocerylists")
+          .add(groceryList.toJson());
+      if (groceryList.hasAutoPayment) {
+        _autoLists.add(groceryList);
+      } else {
+        _manualLists.add(groceryList);
+      }
+      notifyListeners();
+    } catch (error) {
+      rethrow;
     }
-    notifyListeners();
   }
 
   void updateList(GroceryList newGroceryList, GroceryList oldGroceryList) {
@@ -57,5 +74,29 @@ class GroceriesListsProvider extends ChangeNotifier {
       _manualLists.remove(groceryList);
     }
     notifyListeners();
+  }
+
+  Future<void> fetchGroceryLists() async {
+    var auth = FirebaseAuth.instance;
+    var user = auth.currentUser;
+
+    try {
+      _autoLists.clear();
+      _manualLists.clear();
+      await firebaseCollectionRef
+          .get()
+          .then((snapshot) => snapshot.docs.forEach((doc) {
+                if (doc.data()["creatorId"] == user!.uid) {
+                  if (doc.data()["hasAutoPayment"]) {
+                    _autoLists.add(GroceryList.fromJson(doc.id, doc.data()));
+                  } else {
+                    _manualLists.add(GroceryList.fromJson(doc.id, doc.data()));
+                  }
+                }
+              }));
+      notifyListeners();
+    } catch (error) {
+      rethrow;
+    }
   }
 }

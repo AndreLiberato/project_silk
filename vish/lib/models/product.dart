@@ -31,4 +31,16 @@ class Product {
         categories: List<int>.from(json["categories"]),
         rating: json["rating"]);
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      "name": name,
+      "description": description,
+      "measure": measure,
+      "price": price,
+      "categories": categories,
+      "imageUrl": imageUrl,
+      "rating": rating
+    };
+  }
 }

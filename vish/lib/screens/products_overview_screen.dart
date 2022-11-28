@@ -8,8 +8,6 @@ import '../widgets/products_list.dart';
 import '../widgets/search_input.dart';
 
 class ProductsOverviewScreen extends StatefulWidget {
-  const ProductsOverviewScreen({super.key});
-
   @override
   State<ProductsOverviewScreen> createState() => _ProductsOverviewScreenState();
 }
@@ -18,11 +16,7 @@ class _ProductsOverviewScreenState extends State<ProductsOverviewScreen> {
   @override
   void initState() {
     super.initState();
-    var productsProvider =
-        Provider.of<ProductsProvider>(context, listen: false);
-    if (productsProvider.allProducts.isEmpty) {
-      productsProvider.fetchProducts();
-    }
+    Provider.of<ProductsProvider>(context, listen: false).fetchProducts();
   }
 
   @override

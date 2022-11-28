@@ -9,7 +9,6 @@ class AuthException implements Exception {
 class AuthProvider extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
   User? _user;
-  var userIsAuthenticated = false;
 
   User? get user => _user;
   FirebaseAuth get auth => _auth;
@@ -28,6 +27,12 @@ class AuthProvider extends ChangeNotifier {
   _getUser() {
     _user = _auth.currentUser;
     notifyListeners();
+  }
+
+  logout() async {
+    await _auth.signOut().then((_) {
+      _getUser();
+    });
   }
 
   Future<void> registrar(String email, String password, String username) async {

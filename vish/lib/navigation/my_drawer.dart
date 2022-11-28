@@ -1,14 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:vish/providers/auth_provider.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
-
-  Future<void> _saveLoginInfo() async {
-    final prefs = await SharedPreferences.getInstance();
-
-    prefs.setBool("loggedIn", false);
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -73,21 +69,18 @@ class MyDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.logout,
-                size: 16, color: Color.fromRGBO(217, 36, 36, 1)),
-            title: GestureDetector(
-              onTap: () {
-                _saveLoginInfo().then((_) => Navigator.pushReplacementNamed(
-                    context, "/check-auth-screen"));
-              },
-              child: const Text("Sair do Aplicativo",
+              leading: const Icon(Icons.logout,
+                  size: 16, color: Color.fromRGBO(217, 36, 36, 1)),
+              title: const Text("Sair do Aplicativo",
                   style: TextStyle(
                       color: Color.fromRGBO(217, 36, 36, 1),
                       fontFamily: "Acme",
                       fontSize: 16)),
-            ),
-            onTap: () {},
-          ),
+              onTap: () {
+                context.read<AuthProvider>().logout();
+                Navigator.pushNamedAndRemoveUntil(
+                    context, "/login-screen", (route) => false);
+              }),
         ],
       ),
     );

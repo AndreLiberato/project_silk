@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-import '../data/groceries_lists.dart';
 import '../navigation/my_drawer.dart';
 import '../providers/groceries_lists_provider.dart';
 import '../widgets/grocery_list_item.dart';
 import '../widgets/my_appbar.dart';
 
-class MyGroceriesListsScreen extends StatelessWidget {
+class MyGroceriesListsScreen extends StatefulWidget {
+  @override
+  State<MyGroceriesListsScreen> createState() => _MyGroceriesListsScreenState();
+}
+
+class _MyGroceriesListsScreenState extends State<MyGroceriesListsScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<GroceriesListsProvider>(context, listen: false)
+        .fetchGroceryLists();
+  }
+
   void _createGroceriesList(BuildContext context) {
     Navigator.of(context).pushNamed("/lista-form");
   }
@@ -54,28 +65,44 @@ class MyGroceriesListsScreen extends StatelessWidget {
                       child: TabBarView(
                           physics: const NeverScrollableScrollPhysics(),
                           children: [
-                            ListView.builder(
+                            RefreshIndicator(
+                              color: Theme.of(context).primaryColor,
+                              onRefresh: () =>
+                                  Provider.of<GroceriesListsProvider>(context,
+                                          listen: false)
+                                      .fetchGroceryLists(),
+                              child: ListView.builder(
+                                  itemCount:
+                                      groceriesListProvider.manualLists.length,
+                                  itemBuilder: ((context, index) => InkWell(
+                                        onLongPress: () => Navigator.of(context)
+                                            .pushNamed("/lista-form",
+                                                arguments: groceriesListProvider
+                                                    .manualLists[index]),
+                                        child: GroceryListItem(
+                                            groceriesListProvider
+                                                .manualLists[index]),
+                                      ))),
+                            ),
+                            RefreshIndicator(
+                              color: Theme.of(context).primaryColor,
+                              onRefresh: () =>
+                                  Provider.of<GroceriesListsProvider>(context,
+                                          listen: false)
+                                      .fetchGroceryLists(),
+                              child: ListView.builder(
                                 itemCount:
-                                    groceriesListProvider.manualLists.length,
+                                    groceriesListProvider.autoLists.length,
                                 itemBuilder: ((context, index) => InkWell(
                                       onLongPress: () => Navigator.of(context)
                                           .pushNamed("/lista-form",
                                               arguments: groceriesListProvider
-                                                  .manualLists[index]),
+                                                  .autoLists[index]),
                                       child: GroceryListItem(
                                           groceriesListProvider
-                                              .manualLists[index]),
-                                    ))),
-                            ListView.builder(
-                              itemCount: groceriesListProvider.autoLists.length,
-                              itemBuilder: ((context, index) => InkWell(
-                                    onLongPress: () => Navigator.of(context)
-                                        .pushNamed("/lista-form",
-                                            arguments: groceriesListProvider
-                                                .autoLists[index]),
-                                    child: GroceryListItem(
-                                        groceriesListProvider.autoLists[index]),
-                                  )),
+                                              .autoLists[index]),
+                                    )),
+                              ),
                             )
                           ]),
                     ),
