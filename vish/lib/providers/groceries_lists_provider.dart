@@ -28,7 +28,8 @@ class GroceriesListsProvider extends ChangeNotifier {
     try {
       FirebaseFirestore.instance
           .collection("grocerylists")
-          .add(groceryList.toJson());
+          .add(groceryList.toJson())
+          .then((document) => groceryList.id = document.id);
       if (groceryList.hasAutoPayment) {
         _autoLists.add(groceryList);
       } else {

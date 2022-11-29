@@ -6,12 +6,24 @@ import '../widgets/orders_list.dart';
 import '../widgets/finishedOrders_list.dart';
 import '../providers/orders_provider.dart';
 
-class OrderScreen extends StatelessWidget {
+class OrderScreen extends StatefulWidget {
   const OrderScreen({super.key});
+
+  @override
+  State<OrderScreen> createState() => _OrderScreenState();
+}
+
+class _OrderScreenState extends State<OrderScreen> {
+  @override
+  void initState() {
+    super.initState();
+    Provider.of<OrdersProvider>(context, listen: false).fetchOrders();
+  }
 
   @override
   Widget build(BuildContext context) {
     var myOrder = Provider.of<OrdersProvider>(context);
+
     return DefaultTabController(
       initialIndex: 0,
       length: 2,
