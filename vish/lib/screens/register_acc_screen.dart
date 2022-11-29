@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../providers/auth_provider.dart';
 import '../screens/login_screen.dart';
 
 class RegisterAccountScreen extends StatefulWidget {
@@ -10,9 +13,36 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
   TextEditingController nameController = TextEditingController();
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   bool? isChecked = false;
+  bool loading = false;
+
+  registrar() async {
+    setState(() => loading = true);
+    try {
+      await context
+          .read<AuthProvider>()
+          .registrar(emailController.text, passwordController.text,
+              nameController.text)
+          .then((_) {
+        if (Provider.of<AuthProvider>(context, listen: false).user != null) {
+          _saveLoginInfo();
+          Navigator.of(context).pushReplacementNamed("/home-screen");
+        }
+      });
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  void _saveLoginInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("loggedIn", true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -177,6 +207,8 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
                   validator: (value) {
                     if (value!.isEmpty) {
                       return "Insira sua senha!";
+                    } else if (value.length < 6) {
+                      return "A senha precisa de pelo menos 6 caracteres!";
                     } else {
                       return null;
                     }
@@ -192,8 +224,7 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
                         if (isChecked!) {
-                          Navigator.of(context)
-                              .pushReplacementNamed("/home-screen");
+                          registrar();
                         }
                       }
                     },
@@ -202,10 +233,15 @@ class _RegisterAccountScreenState extends State<RegisterAccountScreen> {
                             const Color.fromARGB(255, 250, 102, 46),
                         textStyle: const TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold)),
-                    child: const Text(
-                      "CRIAR CONTA",
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
+                    child: loading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
+                            "CRIAR CONTA",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18.0),
+                          ),
                   ),
                 ),
               ),

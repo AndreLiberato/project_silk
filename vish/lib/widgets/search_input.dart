@@ -12,7 +12,7 @@ class _SearchInputState extends State<SearchInput> {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      width: 360,
+      width: 320,
       height: 45,
       child: Material(
         shadowColor: Colors.black,

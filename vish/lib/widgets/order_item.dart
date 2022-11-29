@@ -6,7 +6,7 @@ import 'package:vish/providers/orders_provider.dart';
 import '../models/order.dart';
 
 class OrderItem extends StatefulWidget {
-  Order order;
+  OrderModel order;
 
   OrderItem(this.order);
 
@@ -25,7 +25,9 @@ class OrderState extends State<OrderItem> {
       height: 100,
       child: ListTile(
         onTap: () {
-          _configurandoModalBottomSheet(context);
+          setState(() {
+            _configurandoModalBottomSheet(context);
+          });
         },
         leading: const Icon(
           Icons.shopping_bag,
@@ -39,8 +41,8 @@ class OrderState extends State<OrderItem> {
         subtitle: Column(children: [
           Text(
             widget.order.status,
-            style: TextStyle(
-                color: widget.order.color, fontSize: 15, fontFamily: "Acme"),
+            style: const TextStyle(
+                color: Colors.grey, fontSize: 15, fontFamily: "Acme"),
             textAlign: TextAlign.start,
           ),
           Text(DateFormat("d 'de' MMMM 'de' y", "pt_BR").format(data),
@@ -81,18 +83,16 @@ class OrderState extends State<OrderItem> {
                           style: TextStyle(color: Colors.green, fontSize: 20),
                         ),
                         onTap: () {
-                          setState(() {
-                            myOrder.confirm(widget.order);
-                            Navigator.of(context).pop();
-                            ScaffoldMessenger.of(context)
-                                .removeCurrentSnackBar();
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              const SnackBar(
-                                duration: Duration(milliseconds: 500),
-                                content: Text("Pedido concluido!"),
-                              ),
-                            );
-                          });
+                          myOrder
+                              .changeOrderStatus(widget.order, "Finalizado")
+                              .then((_) => Navigator.of(context).pop());
+                          ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                          ScaffoldMessenger.of(context).showSnackBar(
+                            const SnackBar(
+                              duration: Duration(milliseconds: 500),
+                              content: Text("Pedido concluido!"),
+                            ),
+                          );
                         }),
                   ),
                   ListTile(
@@ -104,17 +104,17 @@ class OrderState extends State<OrderItem> {
                     title: const Text('Cancelar Pedido',
                         style: TextStyle(color: Colors.red, fontSize: 20)),
                     onTap: () {
-                      setState(() {
-                        myOrder.cancel(widget.order);
-                        Navigator.of(context).pop();
-                        ScaffoldMessenger.of(context).removeCurrentSnackBar();
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          const SnackBar(
-                            duration: Duration(milliseconds: 500),
-                            content: Text("Pedido cancelado!"),
-                          ),
-                        );
-                      });
+                      myOrder
+                          .changeOrderStatus(widget.order, "Cancelado")
+                          .then((_) => Navigator.of(context).pop());
+
+                      ScaffoldMessenger.of(context).removeCurrentSnackBar();
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          duration: Duration(milliseconds: 500),
+                          content: Text("Pedido cancelado!"),
+                        ),
+                      );
                     },
                   ),
                 ],

@@ -38,9 +38,12 @@ class CartScreen extends StatelessWidget {
                       ),
                     ),
                   ),
-                  onPressed: () {
-                    if (myOrder.add(index, myCart.getTotalValueOfCartItems()) ==
-                        1) {
+                  onPressed: () async {
+                    if (await myOrder
+                        .saveOrder(index, myCart.getTotalValueOfCartItems())
+                        .then((operationResult) {
+                      return operationResult;
+                    })) {
                       index++;
                       myCart.clear();
                       ScaffoldMessenger.of(context).removeCurrentSnackBar();

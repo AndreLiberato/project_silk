@@ -1,8 +1,5 @@
-import 'package:flutter/material.dart';
 import '../models/order.dart';
 
-final List<Order> pedidos = [
-];
+final List<OrderModel> pedidos = [];
 
-final List<Order> pedidosFinalizado = [
-];
+final List<OrderModel> pedidosFinalizado = [];

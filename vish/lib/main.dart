@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:provider/provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'configs/config.dart';
+import 'firebase_options.dart';
 
+import 'providers/auth_provider.dart';
+import 'screens/check_auth.dart';
 import 'screens/onboarding_screen.dart';
 import 'screens/register_acc_screen.dart';
 import 'providers/cart_provider.dart';
@@ -19,12 +25,22 @@ import 'screens/cart_screen.dart';
 import 'screens/product_detail_screen.dart';
 import 'screens/search_results_screen.dart';
 
-void main() {
-  runApp(const MyApp());
+void main() async {
+  await initConfiguration();
+  final prefs = await SharedPreferences.getInstance();
+  var isFirstTime = prefs.getBool("firstTimeAppUsage");
+  if (isFirstTime == null) {
+    isFirstTime = true;
+    prefs.setBool("firstTimeAppUsage", true);
+  }
+
+  runApp(MyApp(isFirstTime));
 }
 
 class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+  bool? isFirstTime;
+
+  MyApp(this.isFirstTime);
 
   @override
   Widget build(BuildContext context) {
@@ -35,10 +51,11 @@ class MyApp extends StatelessWidget {
           ),
           ChangeNotifierProvider<GroceriesListsProvider>(
               create: (_) => GroceriesListsProvider()),
-          ChangeNotifierProvider<CartProvider>(
-              create: (_) => CartProvider()),
+          ChangeNotifierProvider<CartProvider>(create: (_) => CartProvider()),
           ChangeNotifierProvider<OrdersProvider>(
-              create: (_) => OrdersProvider()),
+            create: (_) => OrdersProvider(),
+          ),
+          ChangeNotifierProvider<AuthProvider>(create: (_) => AuthProvider())
         ],
         child: MaterialApp(
           localizationsDelegates: const [
@@ -49,7 +66,8 @@ class MyApp extends StatelessWidget {
           supportedLocales: const [Locale('pt', 'BR')],
           debugShowCheckedModeBanner: false,
           title: "Vish-virtual shop",
-          initialRoute: "/onboarding-screen",
+          initialRoute:
+              isFirstTime! ? "/onboarding-screen" : "/check-auth-screen",
           theme: Theme.of(context).copyWith(
               primaryColor: const Color(0xFFf65c05),
               textTheme: const TextTheme(
@@ -74,7 +92,8 @@ class MyApp extends StatelessWidget {
             "/lista-form": (context) => const ListFormScreen(),
             "/lista-detalhes": (context) => const ListDetailsScreen(),
             "/order-screen": (context) => const OrderScreen(),
-            "/cart-screen": (context) => const CartScreen()
+            "/cart-screen": (context) => const CartScreen(),
+            "/check-auth-screen": (context) => CheckAuth()
           },
         ));
   }

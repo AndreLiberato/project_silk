@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import '../providers/auth_provider.dart';
 import '../screens/register_acc_screen.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -9,9 +12,47 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   TextEditingController emailController = TextEditingController();
   TextEditingController passwordController = TextEditingController();
-  GlobalKey<FormState> _formKey = GlobalKey<FormState>();
+  final GlobalKey<FormState> _formKey = GlobalKey<FormState>();
   bool _isObscure = true;
   bool? isChecked = false;
+  bool loading = false;
+
+  @override
+  void initState() {
+    super.initState();
+    _disableOnBoarding();
+  }
+
+  void _disableOnBoarding() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("firstTimeAppUsage", false);
+  }
+
+  login() async {
+    setState(() => loading = true);
+    try {
+      await context
+          .read<AuthProvider>()
+          .login(emailController.text, passwordController.text)
+          .then((_) {
+        if (Provider.of<AuthProvider>(context, listen: false).user != null) {
+          _saveLoginInfo();
+          Navigator.of(context).pushReplacementNamed("/home-screen");
+        }
+      });
+    } on AuthException catch (e) {
+      setState(() => loading = false);
+      ScaffoldMessenger.of(context)
+          .showSnackBar(SnackBar(content: Text(e.message)));
+    }
+  }
+
+  void _saveLoginInfo() async {
+    final prefs = await SharedPreferences.getInstance();
+
+    prefs.setBool("loggedIn", true);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -143,8 +184,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   child: ElevatedButton(
                     onPressed: () {
                       if (_formKey.currentState!.validate()) {
-                        Navigator.of(context)
-                            .pushReplacementNamed("/home-screen");
+                        login();
                       }
                     },
                     style: ElevatedButton.styleFrom(
@@ -152,10 +192,15 @@ class _LoginScreenState extends State<LoginScreen> {
                             const Color.fromARGB(255, 250, 102, 46),
                         textStyle: const TextStyle(
                             fontSize: 30, fontWeight: FontWeight.bold)),
-                    child: const Text(
-                      "ENTRAR",
-                      style: TextStyle(color: Colors.white, fontSize: 18.0),
-                    ),
+                    child: loading
+                        ? const CircularProgressIndicator(
+                            color: Colors.white,
+                          )
+                        : const Text(
+                            "ENTRAR",
+                            style:
+                                TextStyle(color: Colors.white, fontSize: 18.0),
+                          ),
                   ),
                 ),
               ),

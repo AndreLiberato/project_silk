@@ -93,10 +93,12 @@ class _ListFormScreenState extends State<ListFormScreen> {
   void _saveGroceryList() {
     var newGroceryList = GroceryList(
       name: _nameController.text,
+      creatorId: "",
       id: Random().nextInt(1000).toString(),
       description: _descriptionController.text,
       hasAutoPayment: _hasAutoPayment,
       listProducts: _products,
+      creationDate: DateTime.now(),
       paymentDate: _hasAutoPayment ? _autoPaymentDate : null,
     );
     groceryList == null

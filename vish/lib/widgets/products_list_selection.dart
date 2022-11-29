@@ -56,7 +56,7 @@ class _ProductsListSelectionState extends State<ProductsListSelection> {
           mainAxisAlignment: MainAxisAlignment.spaceAround,
           children: [
             SizedBox(
-              width: 320,
+              width: 280,
               height: 45,
               child: Material(
                 shadowColor: Colors.black,

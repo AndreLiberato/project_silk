@@ -23,9 +23,12 @@ class _ProductsSelectorState extends State<ProductsSelector> {
           return GestureDetector(
             onTap: () {
               setState(() {
-                if (widget._selectedProducts
-                    .contains(widget._products[index])) {
-                  widget._selectedProducts.remove(widget._products[index]);
+                if (widget._selectedProducts.any((selectedProduct) =>
+                    selectedProduct.name
+                        .contains(widget._products[index].name))) {
+                  widget._selectedProducts.removeWhere((selectedProduct) =>
+                      selectedProduct.name
+                          .contains(widget._products[index].name));
                 } else {
                   widget._selectedProducts.add(widget._products[index]);
                 }
@@ -34,8 +37,8 @@ class _ProductsSelectorState extends State<ProductsSelector> {
             },
             child: ListTile(
               key: UniqueKey(),
-              selected:
-                  widget._selectedProducts.contains(widget._products[index]),
+              selected: widget._selectedProducts.any((selectedProduct) =>
+                  selectedProduct.name.contains(widget._products[index].name)),
               selectedTileColor: Theme.of(context).primaryColor,
               leading: CircleAvatar(
                   backgroundColor: Colors.white,
