@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:vish/providers/auth_provider.dart';
+import 'package:vish/providers/cart_provider.dart';
 
 class MyDrawer extends StatelessWidget {
   const MyDrawer({super.key});
@@ -77,6 +77,7 @@ class MyDrawer extends StatelessWidget {
                       fontFamily: "Acme",
                       fontSize: 16)),
               onTap: () {
+                context.read<CartProvider>().clear();
                 context.read<AuthProvider>().logout();
                 Navigator.pushNamedAndRemoveUntil(
                     context, "/login-screen", (route) => false);
